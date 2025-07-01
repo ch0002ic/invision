@@ -69,17 +69,17 @@ export default function Dashboard1() {
     <div className="min-h-screen bg-[#fafbff] flex">
       {/* Sidebar */}
       <div className="w-64 bg-white border-r border-[#e7e7e7] flex flex-col">
-        <div className="p-6 border-b border-[#e7e7e7]">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#1b59f8] rounded-lg flex items-center justify-center">
-              <div className="w-4 h-4 bg-white rounded-sm"></div>
-            </div>
-            <div>
-              <h1 className="font-semibold text-[#292d32] text-sm">Smart Manhole</h1>
-              <p className="text-xs text-[#9098a3]">Monitoring System</p>
+          <div className="p-6 border-b border-[#e7e7e7]">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-[#1b59f8] rounded-lg flex items-center justify-center">
+                <div className="w-4 h-4 bg-white rounded-sm"></div>
+              </div>
+              <div>
+                <h1 className="font-semibold text-[#292d32] text-sm">Smart Manhole</h1>
+                <p className="text-xs text-[#9098a3]">Monitoring System</p>
+              </div>
             </div>
           </div>
-        </div>
 
         <nav className="flex-1 p-4">
           <div className="space-y-2">
@@ -131,35 +131,35 @@ export default function Dashboard1() {
             <div>
               <p className="text-sm text-[#9098a3]">Last Updated: 2025-01-15 14:32</p>
             </div>
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="w-5 h-5 text-[#9098a3]" />
-                <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#df0404] rounded-full"></div>
-              </Button>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center gap-2">
-                    <Avatar className="w-8 h-8">
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" size="icon" className="relative">
+              <Bell className="w-5 h-5 text-[#9098a3]" />
+              <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#df0404] rounded-full"></div>
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center gap-2">
+                  <Avatar className="w-8 h-8">
                       <AvatarImage src="/placeholder.svg?height=32&width=32" />
-                      <AvatarFallback className="bg-[#1b59f8] text-white text-sm">MW</AvatarFallback>
-                    </Avatar>
-                    <span className="text-sm font-medium text-[#292d32]">Melody Wong</span>
-                    <ChevronDown className="w-4 h-4 text-[#9098a3]" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
-                  <DropdownMenuItem>Logout</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+                    <AvatarFallback className="bg-[#1b59f8] text-white text-sm">MW</AvatarFallback>
+                  </Avatar>
+                  <span className="text-sm font-medium text-[#292d32]">Melody Wong</span>
+                  <ChevronDown className="w-4 h-4 text-[#9098a3]" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuItem>Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
           </div>
         </header>
 
         {/* Dashboard Content */}
         <main className="flex-1 p-6 space-y-6">
-          {/* Metrics Cards */}
+        {/* Metrics Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card className="bg-white border-[#e7e7e7]">
               <CardContent className="p-4">
@@ -305,7 +305,7 @@ export default function Dashboard1() {
                 <CardContent className="space-y-3">
                   {alerts.map((alert, index) => (
                     <div key={index} className="space-y-2">
-                      <div className="flex items-start gap-2">
+                    <div className="flex items-start gap-2">
                         <Badge
                           className={`text-xs ${
                             alert.type === "Critical"
@@ -340,7 +340,7 @@ export default function Dashboard1() {
                         >
                           {alert.type}
                         </Badge>
-                      </div>
+                  </div>
                       <p className="text-sm text-[#292d32]">{alert.message}</p>
                       {alert.time && <p className="text-xs text-[#9098a3]">{alert.time}</p>}
                     </div>
