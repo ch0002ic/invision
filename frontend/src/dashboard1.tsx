@@ -66,404 +66,350 @@ export default function Dashboard1() {
   ]
 
   return (
-    <div className="min-h-screen bg-[#fafbff] flex">
-      {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-[#e7e7e7] flex flex-col">
-          <div className="p-6 border-b border-[#e7e7e7]">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-[#1b59f8] rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 bg-white rounded-sm"></div>
-              </div>
-              <div>
-                <h1 className="font-semibold text-[#292d32] text-sm">Smart Manhole</h1>
-                <p className="text-xs text-[#9098a3]">Monitoring System</p>
-              </div>
+    <div className="min-h-screen bg-[#f7f9fb] flex">
+      {/* Floating Sidebar */}
+      <aside className="fixed left-6 top-6 bottom-6 w-52 z-30 bg-white rounded-2xl shadow-sm border border-[#f0f2f5] flex flex-col transition-all">
+        <div className="p-4 border-b border-[#f0f2f5]">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-[#1b59f8] rounded-lg flex items-center justify-center">
+              <div className="w-4 h-4 bg-white rounded-sm"></div>
+            </div>
+            <div>
+              <h1 className="font-semibold text-[#292d32] text-sm">Smart Manhole</h1>
+              <p className="text-xs text-[#bfc8d6]">Monitoring System</p>
             </div>
           </div>
-
-        <nav className="flex-1 p-4">
-          <div className="space-y-2">
+        </div>
+        <nav className="flex-1 p-2">
+          <div className="space-y-1">
             <Button
               variant="ghost"
-              className="w-full justify-start gap-3 bg-[#f9fbff] text-[#1b59f8] hover:bg-[#f9fbff]"
+              className="w-full justify-start gap-3 bg-[#f7f9fb] text-[#1b59f8] font-bold rounded-lg border-l-4 border-[#1b59f8] !pl-5 !py-2 shadow-none !text-base !font-semibold"
             >
               <Home className="w-4 h-4" />
               Home
             </Button>
-            <Button variant="ghost" className="w-full justify-start gap-3 text-[#9098a3] hover:bg-[#f9fbff]">
+            <Button variant="ghost" className="w-full justify-start gap-3 text-[#bfc8d6] hover:bg-[#f7f9fb] rounded-lg !pl-5 !py-2 !text-base">
               <Eye className="w-4 h-4" />
               E-Hole
             </Button>
-            <Button variant="ghost" className="w-full justify-start gap-3 text-[#9098a3] hover:bg-[#f9fbff]">
+            <Button variant="ghost" className="w-full justify-start gap-3 text-[#bfc8d6] hover:bg-[#f7f9fb] rounded-lg !pl-5 !py-2 !text-base">
               <FileText className="w-4 h-4" />
               Reporting Case
             </Button>
           </div>
-
-          <div className="mt-8">
-            <p className="text-xs font-medium text-[#9098a3] mb-3">Support</p>
-            <div className="space-y-2">
-              <Button variant="ghost" className="w-full justify-start gap-3 text-[#9098a3] hover:bg-[#f9fbff]">
+          <div className="mt-6">
+            <p className="text-xs font-medium text-[#d1d5db] mb-2">Support</p>
+            <div className="space-y-1">
+              <Button variant="ghost" className="w-full justify-start gap-3 text-[#bfc8d6] hover:bg-[#f7f9fb] rounded-lg !pl-5 !py-2 !text-base">
                 <HelpCircle className="w-4 h-4" />
                 Get Started
               </Button>
-              <Button variant="ghost" className="w-full justify-start gap-3 text-[#9098a3] hover:bg-[#f9fbff]">
+              <Button variant="ghost" className="w-full justify-start gap-3 text-[#bfc8d6] hover:bg-[#f7f9fb] rounded-lg !pl-5 !py-2 !text-base">
                 <Settings className="w-4 h-4" />
                 Settings
               </Button>
             </div>
           </div>
         </nav>
-
-        <div className="p-4 border-t border-[#e7e7e7]">
-          <Button variant="ghost" className="w-full justify-start gap-3 text-[#df0404] hover:bg-[#fef2f2]">
+        <div className="mt-auto p-4">
+          <Button variant="ghost" className="w-full justify-start gap-3 text-[#df0404] hover:bg-[#fef2f2] rounded-lg font-semibold !text-base">
             <LogOut className="w-4 h-4" />
             Logout
           </Button>
         </div>
-      </div>
+      </aside>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <header className="bg-white border-b border-[#e7e7e7] px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-[#9098a3]">Last Updated: 2025-01-15 14:32</p>
-            </div>
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="w-5 h-5 text-[#9098a3]" />
-              <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#df0404] rounded-full"></div>
-            </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center gap-2">
-                  <Avatar className="w-8 h-8">
-                      <AvatarImage src="/placeholder.svg?height=32&width=32" />
-                    <AvatarFallback className="bg-[#1b59f8] text-white text-sm">MW</AvatarFallback>
-                  </Avatar>
-                  <span className="text-sm font-medium text-[#292d32]">Melody Wong</span>
-                  <ChevronDown className="w-4 h-4 text-[#9098a3]" />
+      {/* Main Content Floating Card Group */}
+      <main className="flex-1 flex flex-col ml-[14.5rem] mr-6 mt-6 mb-6">
+        <div className="max-w-[1500px] mx-auto w-full">
+          <div className="bg-white rounded-2xl shadow-lg border border-[#f0f2f5] px-12 py-8">
+            {/* Header */}
+            <header className="flex items-center justify-between mb-6 pt-0 pb-2 min-h-[44px]">
+              <p className="text-xs text-[#e3e8ee] font-medium mt-0 ml-0 absolute left-0 top-0 pt-4 pl-12">Last Updated: 2025-01-15 14:32</p>
+              <div className="flex items-center gap-3 ml-auto mt-2 mr-1 relative z-10">
+                <Button variant="ghost" size="icon" className="relative p-0 h-10 w-10 flex items-center justify-center">
+                  <Bell className="w-6 h-6 text-[#9098a3]" />
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#df0404] rounded-full border-2 border-white shadow"></div>
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Logout</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-          </div>
-        </header>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="flex items-center gap-1 p-0 h-10 min-w-0">
+                      <Avatar className="w-8 h-8">
+                        <AvatarImage src="/placeholder.svg?height=32&width=32" />
+                        <AvatarFallback className="bg-[#1b59f8] text-white text-sm">MW</AvatarFallback>
+                      </Avatar>
+                      <span className="text-sm font-normal text-[#5a6473] ml-2">Melody Wong</span>
+                      <ChevronDown className="w-3 h-3 text-[#bfc8d6] ml-1" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="min-w-[120px] px-0 py-1">
+                    <DropdownMenuItem className="px-4 py-1 text-left">Profile</DropdownMenuItem>
+                    <DropdownMenuItem className="px-4 py-1 text-left">Settings</DropdownMenuItem>
+                    <DropdownMenuItem className="px-4 py-1 text-left">Logout</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </header>
 
-        {/* Dashboard Content */}
-        <main className="flex-1 p-6 space-y-6">
-        {/* Metrics Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card className="bg-white border-[#e7e7e7]">
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-[#9098a3] mb-1">Total Manholes</p>
+            {/* Metrics Cards */}
+            <div className="flex gap-7 mb-7">
+              <Card className="flex-1 bg-white border border-[#f0f2f5] shadow rounded-lg">
+                <CardContent className="p-5 flex items-center gap-4">
+                  <div className="flex-1">
+                    <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Total Manholes</p>
                     <p className="text-2xl font-bold text-[#292d32]">24</p>
                   </div>
-                  <div className="w-10 h-10 bg-[#dbeafe] rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-[#eaf1ff] rounded-lg flex items-center justify-center">
                     <div className="w-5 h-5 bg-[#2563eb] rounded"></div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white border-[#e7e7e7]">
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-[#9098a3] mb-1">Active Alerts</p>
+                </CardContent>
+              </Card>
+              <Card className="flex-1 bg-white border border-[#f0f2f5] shadow rounded-lg">
+                <CardContent className="p-5 flex items-center gap-4">
+                  <div className="flex-1">
+                    <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Active Alerts</p>
                     <p className="text-2xl font-bold text-[#292d32]">3</p>
                   </div>
-                  <div className="w-10 h-10 bg-[#fee2e2] rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-[#fee2e2] rounded-lg flex items-center justify-center">
                     <AlertTriangle className="w-5 h-5 text-[#dc2626]" />
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white border-[#e7e7e7]">
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-[#9098a3] mb-1">Normal Status</p>
+                </CardContent>
+              </Card>
+              <Card className="flex-1 bg-white border border-[#f0f2f5] shadow rounded-lg">
+                <CardContent className="p-5 flex items-center gap-4">
+                  <div className="flex-1">
+                    <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Normal Status</p>
                     <p className="text-2xl font-bold text-[#292d32]">19</p>
                   </div>
-                  <div className="w-10 h-10 bg-[#dcfce7] rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-[#dcfce7] rounded-lg flex items-center justify-center">
                     <div className="w-5 h-5 bg-[#16a34a] rounded-full"></div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white border-[#e7e7e7]">
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-[#9098a3] mb-1">Maintenance Due</p>
+                </CardContent>
+              </Card>
+              <Card className="flex-1 bg-white border border-[#f0f2f5] shadow rounded-lg">
+                <CardContent className="p-5 flex items-center gap-4">
+                  <div className="flex-1">
+                    <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Maintenance Due</p>
                     <p className="text-2xl font-bold text-[#292d32]">2</p>
                   </div>
-                  <div className="w-10 h-10 bg-[#ffedd5] rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-[#ffedd5] rounded-lg flex items-center justify-center">
                     <Wrench className="w-5 h-5 text-[#ea580c]" />
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+                </CardContent>
+              </Card>
+            </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Map Section */}
-            <div className="lg:col-span-2">
-              <Card className="bg-white border-[#e7e7e7]">
-                <CardHeader>
-                  <CardTitle className="text-lg font-semibold text-[#292d32]">Taipei City Overview Map</CardTitle>
+            <div className="flex gap-7 mb-7">
+              {/* Map Section */}
+              <Card className="flex-[2.5] bg-white border border-[#f0f2f5] shadow rounded-xl flex flex-col justify-between min-h-[340px]">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base font-bold text-[#292d32]">Taipei City Overview Map</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="relative h-80 bg-gradient-to-br from-[#dcfce7] to-[#bbf7d0] rounded-lg overflow-hidden">
-                    {/* Simplified map representation */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="relative w-64 h-64">
-                        {/* Circular city layout */}
-                        <div className="absolute inset-0 border-2 border-white/30 rounded-full"></div>
-                        <div className="absolute inset-4 border border-white/20 rounded-full"></div>
-                        <div className="absolute inset-8 border border-white/20 rounded-full"></div>
-
-                        {/* Status markers */}
-                        <div className="absolute top-12 left-20 w-3 h-3 bg-[#16a34a] rounded-full"></div>
-                        <div className="absolute top-20 right-16 w-3 h-3 bg-[#dc2626] rounded-full"></div>
-                        <div className="absolute bottom-16 left-24 w-3 h-3 bg-[#ea580c] rounded-full"></div>
-                        <div className="absolute bottom-20 right-20 w-3 h-3 bg-[#7e22ce] rounded-full"></div>
-                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-[#ea580c] rounded-full"></div>
-                      </div>
-                    </div>
+                <CardContent className="flex-1 flex flex-col justify-between">
+                  <div className="relative h-72 rounded-lg overflow-hidden mb-2">
+                    <img
+                      src="/map-demo.png"
+                      alt="Taipei City Map"
+                      className="absolute inset-0 w-full h-full object-cover opacity-95"
+                    />
+                    {/* Status markers (pixel-tweaked positions) */}
+                    <div className="absolute top-[70px] left-[120px] w-4 h-4 bg-[#16a34a] rounded-full border-2 border-white shadow-lg"></div>
+                    <div className="absolute top-[120px] right-[110px] w-4 h-4 bg-[#dc2626] rounded-full border-2 border-white shadow-lg"></div>
+                    <div className="absolute bottom-[60px] left-[160px] w-4 h-4 bg-[#ea580c] rounded-full border-2 border-white shadow-lg"></div>
+                    <div className="absolute bottom-[80px] right-[150px] w-4 h-4 bg-[#7e22ce] rounded-full border-2 border-white shadow-lg"></div>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-[#ea580c] rounded-full border-2 border-white shadow-lg"></div>
                   </div>
-
                   {/* Legend */}
-                  <div className="flex items-center justify-center gap-6 mt-4 text-sm">
+                  <div className="flex items-center justify-center gap-7 mt-2 text-xs">
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-[#16a34a] rounded-full"></div>
-                      <span className="text-[#9098a3]">Normal (0-25%)</span>
+                      <span className="text-[#bfc8d6]">Normal (0-25%)</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-[#ea580c] rounded-full"></div>
-                      <span className="text-[#9098a3]">Warning (26-60%)</span>
+                      <span className="text-[#bfc8d6]">Warning (26-60%)</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-[#dc2626] rounded-full"></div>
-                      <span className="text-[#9098a3]">Critical (61-100%)</span>
+                      <span className="text-[#bfc8d6]">Critical (61-100%)</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-[#7e22ce] rounded-full"></div>
-                      <span className="text-[#9098a3]">Maintenance</span>
+                      <span className="text-[#bfc8d6]">Maintenance</span>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            </div>
 
-            {/* Right Panel */}
-            <div className="space-y-6">
-              {/* Weather Forecast */}
-              <Card className="bg-white border-[#e7e7e7]">
-                <CardHeader>
-                  <CardTitle className="text-lg font-semibold text-[#292d32]">Weather Forecast</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-[#9098a3]">Current</span>
-                    <div className="flex items-center gap-2">
-                      <Cloud className="w-4 h-4 text-[#9098a3]" />
-                      <span className="text-sm text-[#292d32]">Light Rain</span>
+              {/* Right Panel Floating Card */}
+              <div className="flex-1 flex flex-col gap-7 min-w-[320px]">
+                <Card className="bg-white border border-[#f0f2f5] shadow rounded-xl flex-1">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-base font-bold text-[#292d32]">Weather Forecast</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-[#bfc8d6]">Current</span>
+                      <div className="flex items-center gap-2">
+                        <Cloud className="w-4 h-4 text-[#bfc8d6]" />
+                        <span className="text-xs text-[#292d32]">Light Rain</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-[#9098a3]">Rainfall</span>
-                    <span className="text-sm text-[#292d32]">2.5mm/hr</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-[#9098a3]">Risk Level</span>
-                    <Badge className="bg-[#ffedd5] text-[#ea580c] hover:bg-[#ffedd5]">Medium</Badge>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Active Alerts */}
-              <Card className="bg-white border-[#e7e7e7]">
-                <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-lg font-semibold text-[#292d32]">Active Alerts</CardTitle>
-                  <Button variant="ghost" className="text-[#1b59f8] text-sm p-0 h-auto">
-                    View All
-                  </Button>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {alerts.map((alert, index) => (
-                    <div key={index} className="space-y-2">
-                    <div className="flex items-start gap-2">
-                        <Badge
-                          className={`text-xs ${
-                            alert.type === "Critical"
-                              ? "bg-[#fee2e2] text-[#dc2626]"
-                              : alert.type === "Warning"
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-[#bfc8d6]">Rainfall</span>
+                      <span className="text-xs text-[#292d32]">2.5mm/hr</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-[#bfc8d6]">Risk Level</span>
+                      <Badge className="bg-[#ffedd5] text-[#ea580c] hover:bg-[#ffedd5] font-semibold text-xs">Medium</Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white border border-[#f0f2f5] shadow rounded-xl flex-1">
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <CardTitle className="text-base font-bold text-[#292d32]">Active Alerts</CardTitle>
+                    <Button variant="ghost" className="text-[#1b59f8] text-xs p-0 h-auto font-semibold">
+                      View All
+                    </Button>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    {alerts.map((alert, index) => (
+                      <div key={index} className="space-y-1">
+                        <div className="flex items-start gap-2">
+                          <Badge
+                            className={`text-xs font-semibold ${
+                              alert.type === "Critical"
+                                ? "bg-[#fee2e2] text-[#dc2626]"
+                                : alert.type === "Warning"
                                 ? "bg-[#ffedd5] text-[#ea580c]"
                                 : "bg-[#e9d5ff] text-[#7e22ce]"
-                          } hover:${
-                            alert.type === "Critical"
-                              ? "bg-[#fee2e2]"
-                              : alert.type === "Warning"
-                                ? "bg-[#ffedd5]"
-                                : "bg-[#e9d5ff]"
-                          }`}
-                        >
-                          {alert.id}
-                        </Badge>
-                        <Badge
-                          className={`text-xs ${
-                            alert.type === "Critical"
-                              ? "bg-[#fee2e2] text-[#dc2626]"
-                              : alert.type === "Warning"
+                            }`}
+                          >
+                            {alert.id}
+                          </Badge>
+                          <Badge
+                            className={`text-xs font-semibold ${
+                              alert.type === "Critical"
+                                ? "bg-[#fee2e2] text-[#dc2626]"
+                                : alert.type === "Warning"
                                 ? "bg-[#ffedd5] text-[#ea580c]"
                                 : "bg-[#e9d5ff] text-[#7e22ce]"
-                          } hover:${
-                            alert.type === "Critical"
-                              ? "bg-[#fee2e2]"
-                              : alert.type === "Warning"
-                                ? "bg-[#ffedd5]"
-                                : "bg-[#e9d5ff]"
-                          }`}
-                        >
-                          {alert.type}
-                        </Badge>
-                  </div>
-                      <p className="text-sm text-[#292d32]">{alert.message}</p>
-                      {alert.time && <p className="text-xs text-[#9098a3]">{alert.time}</p>}
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-
-          {/* Data Table */}
-          <Card className="bg-white border-[#e7e7e7]">
-            <CardContent className="p-0">
-              {/* Table Filters */}
-              <div className="flex items-center justify-between p-6 border-b border-[#e7e7e7]">
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant={activeFilter === "All Manholes" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setActiveFilter("All Manholes")}
-                    className={activeFilter === "All Manholes" ? "bg-[#292d32] text-white" : ""}
-                  >
-                    All Manholes
-                  </Button>
-                  <Button
-                    variant={activeFilter === "Critical Only" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setActiveFilter("Critical Only")}
-                    className={activeFilter === "Critical Only" ? "bg-[#292d32] text-white" : ""}
-                  >
-                    Critical Only
-                  </Button>
-                  <Button
-                    variant={activeFilter === "Maintenance Due" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setActiveFilter("Maintenance Due")}
-                    className={activeFilter === "Maintenance Due" ? "bg-[#292d32] text-white" : ""}
-                  >
-                    Maintenance Due
-                  </Button>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-[#9098a3]">Sort by:</span>
-                  <Select defaultValue="newest">
-                    <SelectTrigger className="w-32">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="newest">Newest</SelectItem>
-                      <SelectItem value="oldest">Oldest</SelectItem>
-                      <SelectItem value="status">Status</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                            }`}
+                          >
+                            {alert.type}
+                          </Badge>
+                        </div>
+                        <p className="text-xs text-[#292d32] font-medium">{alert.message}</p>
+                        {alert.time && <p className="text-xs text-[#bfc8d6]">{alert.time}</p>}
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
               </div>
+            </div>
 
-              {/* Table */}
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-[#e7e7e7]">
-                    <TableHead className="text-[#9098a3] font-medium">ID</TableHead>
-                    <TableHead className="text-[#9098a3] font-medium">Location</TableHead>
-                    <TableHead className="text-[#9098a3] font-medium">Type</TableHead>
-                    <TableHead className="text-[#9098a3] font-medium">Water Threshold (cm)</TableHead>
-                    <TableHead className="text-[#9098a3] font-medium">Gas Threshold (ppm)</TableHead>
-                    <TableHead className="text-[#9098a3] font-medium">Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {manholeData.map((item) => (
-                    <TableRow key={item.id} className="border-[#e7e7e7]">
-                      <TableCell className="font-medium text-[#292d32]">{item.id}</TableCell>
-                      <TableCell className="text-[#292d32]">{item.location}</TableCell>
-                      <TableCell className="text-[#9098a3]">{item.type}</TableCell>
-                      <TableCell className="text-[#292d32]">{item.waterThreshold}</TableCell>
-                      <TableCell className="text-[#292d32]">{item.gasThreshold}</TableCell>
-                      <TableCell>
-                        <Badge
-                          className={`${
-                            item.status === "Critical"
-                              ? "bg-[#fee2e2] text-[#dc2626] hover:bg-[#fee2e2]"
-                              : "bg-[#dcfce7] text-[#16a34a] hover:bg-[#dcfce7]"
-                          }`}
-                        >
-                          {item.status}
-                        </Badge>
-                      </TableCell>
+            {/* Data Table Floating Card - visually connected to map card */}
+            <Card className="bg-white border border-[#f0f2f5] shadow rounded-xl mt-0">
+              <CardContent className="p-0">
+                {/* Table Filters as Pills */}
+                <div className="flex items-center justify-between p-4 border-b border-[#f0f2f5]">
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant={activeFilter === "All Manholes" ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setActiveFilter("All Manholes")}
+                      className={`rounded-full px-4 py-1 text-xs font-semibold ${activeFilter === "All Manholes" ? "bg-[#292d32] text-white" : "bg-[#f7f9fb] text-[#292d32] border border-[#e7e7e7]"}`}
+                    >
+                      All Manholes
+                    </Button>
+                    <Button
+                      variant={activeFilter === "Critical Only" ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setActiveFilter("Critical Only")}
+                      className={`rounded-full px-4 py-1 text-xs font-semibold ${activeFilter === "Critical Only" ? "bg-[#292d32] text-white" : "bg-[#f7f9fb] text-[#292d32] border border-[#e7e7e7]"}`}
+                    >
+                      Critical Only
+                    </Button>
+                    <Button
+                      variant={activeFilter === "Maintenance Due" ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setActiveFilter("Maintenance Due")}
+                      className={`rounded-full px-4 py-1 text-xs font-semibold ${activeFilter === "Maintenance Due" ? "bg-[#292d32] text-white" : "bg-[#f7f9fb] text-[#292d32] border border-[#e7e7e7]"}`}
+                    >
+                      Maintenance Due
+                    </Button>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-[#bfc8d6]">Sort by:</span>
+                    <Select defaultValue="newest">
+                      <SelectTrigger className="w-28 text-xs">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="newest">Newest</SelectItem>
+                        <SelectItem value="oldest">Oldest</SelectItem>
+                        <SelectItem value="status">Status</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                {/* Table */}
+                <Table>
+                  <TableHeader>
+                    <TableRow className="border-[#f0f2f5] bg-[#f7f9fb]">
+                      <TableHead className="text-[#292d32] font-bold text-xs">ID</TableHead>
+                      <TableHead className="text-[#bfc8d6] font-semibold text-xs">Location</TableHead>
+                      <TableHead className="text-[#bfc8d6] font-semibold text-xs">Type</TableHead>
+                      <TableHead className="text-[#bfc8d6] font-semibold text-xs">Water Threshold (cm)</TableHead>
+                      <TableHead className="text-[#bfc8d6] font-semibold text-xs">Gas Threshold (ppm)</TableHead>
+                      <TableHead className="text-[#bfc8d6] font-semibold text-xs">Status</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-
-              {/* Pagination */}
-              <div className="flex items-center justify-between p-6 border-t border-[#e7e7e7]">
-                <p className="text-sm text-[#9098a3]">Showing data 1 to 8 of 256k entries</p>
-                <div className="flex items-center gap-2">
-                  <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent">
-                    <ChevronLeft className="w-4 h-4" />
-                  </Button>
-                  <Button variant="default" size="sm" className="bg-[#1b59f8] text-white">
-                    1
-                  </Button>
-                  <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent">
-                    2
-                  </Button>
-                  <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent">
-                    3
-                  </Button>
-                  <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent">
-                    4
-                  </Button>
-                  <span className="text-[#9098a3]">...</span>
-                  <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent">
-                    40
-                  </Button>
-                  <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent">
-                    <ChevronRight className="w-4 h-4" />
-                  </Button>
+                  </TableHeader>
+                  <TableBody>
+                    {manholeData.map((item) => (
+                      <TableRow key={item.id} className="border-[#f0f2f5] hover:bg-[#f9fbff]">
+                        <TableCell className="font-bold text-[#292d32] text-xs">{item.id}</TableCell>
+                        <TableCell className="text-[#bfc8d6] text-xs">{item.location}</TableCell>
+                        <TableCell className="text-[#bfc8d6] text-xs">{item.type}</TableCell>
+                        <TableCell className="text-[#bfc8d6] text-xs">{item.waterThreshold}</TableCell>
+                        <TableCell className="text-[#bfc8d6] text-xs">{item.gasThreshold}</TableCell>
+                        <TableCell>
+                          <Badge
+                            className={`rounded-full px-3 py-1 text-xs font-bold ${item.status === "Critical"
+                              ? "bg-[#fee2e2] text-[#dc2626] hover:bg-[#fee2e2]"
+                              : "bg-[#dcfce7] text-[#16a34a] hover:bg-[#dcfce7]"}`}
+                          >
+                            {item.status}
+                          </Badge>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                {/* Pagination */}
+                <div className="flex items-center justify-between p-4 border-t border-[#f0f2f5]">
+                  <p className="text-xs text-[#bfc8d6]">Showing data 1 to 8 of 256k entries</p>
+                  <div className="flex items-center gap-1">
+                    <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent rounded-full text-xs">
+                      <ChevronLeft className="w-4 h-4" />
+                    </Button>
+                    <Button variant="default" size="sm" className="bg-[#1b59f8] text-white rounded-full font-bold text-xs">1</Button>
+                    <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent rounded-full font-bold text-xs">2</Button>
+                    <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent rounded-full font-bold text-xs">3</Button>
+                    <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent rounded-full font-bold text-xs">4</Button>
+                    <span className="text-[#bfc8d6] text-xs">...</span>
+                    <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent rounded-full font-bold text-xs">40</Button>
+                    <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent rounded-full text-xs">
+                      <ChevronRight className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </main>
-      </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </main>
     </div>
   )
 }

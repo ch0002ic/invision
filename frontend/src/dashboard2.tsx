@@ -94,233 +94,245 @@ export default function Dashboard2() {
   }
 
   return (
-    <div className="flex h-screen bg-[#fafbff]">
+    <div className="flex min-h-screen bg-[#f7f9fb]">
       {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-[#e5e7eb] flex flex-col">
-        {/* Logo */}
-        <div className="p-6 border-b border-[#e5e7eb]">
+      <aside className="fixed left-6 top-6 bottom-6 w-56 z-30 bg-white rounded-2xl shadow-sm border border-[#f0f2f5] flex flex-col transition-all">
+        <div className="p-4 border-b border-[#f0f2f5]">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#0e52ff] rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-[#1b59f8] rounded-lg flex items-center justify-center">
               <div className="w-4 h-4 bg-white rounded-sm"></div>
             </div>
             <div>
-              <div className="font-semibold text-[#000000]">Smart Manhole</div>
-              <div className="text-sm text-[#9798a1]">Monitoring System</div>
+              <h1 className="font-semibold text-[#292d32] text-sm">Smart Manhole</h1>
+              <p className="text-xs text-[#bfc8d6]">Monitoring System</p>
             </div>
           </div>
         </div>
-
-        {/* Navigation */}
-        <div className="flex-1 p-4">
-          <nav className="space-y-2">
+        <nav className="flex-1 p-2">
+          <div className="space-y-1">
             {navItems.map((item) => (
-              <button
+              <Button
                 key={item.name}
-                onClick={() => setActiveNav(item.name)}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                  activeNav === item.name ? "bg-[#eff0f6] text-[#0e52ff]" : "text-[#9798a1] hover:bg-[#f8f8fb]"
+                variant="ghost"
+                className={`w-full justify-start gap-3 rounded-lg !pl-5 !py-2 !text-base transition-all font-semibold ${
+                  activeNav === item.name
+                    ? 'bg-[#f5f7fa] text-[#1b59f8] border-l-4 border-[#1b59f8]'
+                    : 'text-[#bfc8d6] hover:bg-[#f5f7fa] border-l-4 border-transparent'
                 }`}
+                onClick={() => setActiveNav(item.name)}
               >
                 <item.icon className="w-4 h-4" />
                 {item.name}
-              </button>
+              </Button>
             ))}
-          </nav>
-
-          <div className="mt-8">
-            <div className="text-sm font-medium text-[#9798a1] mb-3">Support</div>
-            <nav className="space-y-2">
+          </div>
+          <div className="mt-6">
+            <p className="text-xs font-medium text-[#d1d5db] mb-2">Support</p>
+            <div className="space-y-1">
               {supportItems.map((item) => (
-                <button
+                <Button
                   key={item.name}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left text-[#9798a1] hover:bg-[#f8f8fb] transition-colors"
+                  variant="ghost"
+                  className="w-full justify-start gap-3 text-[#bfc8d6] hover:bg-[#f5f7fa] rounded-lg !pl-5 !py-2 !text-base"
                 >
                   <item.icon className="w-4 h-4" />
                   {item.name}
-                </button>
+                </Button>
               ))}
-            </nav>
+            </div>
           </div>
-        </div>
-
-        {/* Logout */}
-        <div className="p-4 border-t border-[#e5e7eb]">
-          <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left text-[#ff3b30] hover:bg-[#f8f8fb] transition-colors">
+        </nav>
+        <div className="mt-auto p-4">
+          <Button variant="ghost" className="w-full justify-start gap-3 text-[#df0404] hover:bg-[#fef2f2] rounded-lg font-semibold !text-base">
             <LogOut className="w-4 h-4" />
             Logout
-          </button>
+          </Button>
         </div>
-      </div>
+      </aside>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <header className="bg-white border-b border-[#e5e7eb] px-6 py-4">
-          <div className="flex items-center justify-between">
+      {/* Main Content Floating Card */}
+      <main className="flex-1 flex flex-col ml-[15rem] mr-6 mt-6 mb-6">
+        <div className="max-w-[1500px] mx-auto w-full">
+          {/* Header */}
+          <header className="flex items-center justify-between mb-4 pt-2 pb-2">
             <div></div>
-            <div className="text-sm text-[#9798a1]">Last Updated: 2025-01-15 14:32</div>
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon">
-                <Bell className="w-5 h-5" />
+            <p className="text-xs text-[#cfd8e3] font-medium mt-1">Last Updated: 2025-01-15 14:32</p>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="icon" className="relative p-2 h-9 w-9">
+                <Bell className="w-5 h-5 text-[#bfc8d6]" />
+                <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-[#df0404] rounded-full border-2 border-white"></div>
               </Button>
               <div className="flex items-center gap-2">
                 <Avatar className="w-8 h-8">
                   <AvatarImage src="/placeholder.svg?height=32&width=32" />
-                  <AvatarFallback>MW</AvatarFallback>
+                  <AvatarFallback className="bg-[#1b59f8] text-white text-sm">MW</AvatarFallback>
                 </Avatar>
-                <span className="text-sm font-medium">Melody Wong</span>
+                <span className="text-sm font-semibold text-[#292d32]">Melody Wong</span>
               </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        {/* Content */}
-        <main className="flex-1 p-6 overflow-auto">
-          {/* Title Section */}
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-4">
-              <div className="w-24 h-24 bg-white rounded-lg border border-[#e5e7eb] p-2">
-                <img
-                  src="/placeholder.svg?height=80&width=80"
-                  alt="Manhole Device"
-                  width={80}
-                  height={80}
-                  className="w-full h-full object-contain"
-                  style={{ maxWidth: 80, maxHeight: 80 }}
-                />
-              </div>
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <h1 className="text-2xl font-bold">E-Hole : 237001</h1>
-                  <Button variant="ghost" size="icon">
-                    <Edit className="w-4 h-4" />
-                  </Button>
+          {/* Main Card */}
+          <div className="bg-white rounded-2xl shadow-lg border border-[#f0f2f5] px-10 py-8">
+            {/* Title Section */}
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-6">
+                <div className="w-28 h-28 bg-white rounded-full border border-[#e5e7eb] flex items-center justify-center overflow-hidden">
+                  <img
+                    src="/placeholder.svg?height=100&width=100"
+                    alt="Manhole Device"
+                    width={100}
+                    height={100}
+                    className="w-24 h-24 object-contain"
+                  />
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <div className="flex gap-1">
-                      {[1, 2, 3, 4].map((i) => (
-                        <div key={i} className="w-2 h-6 bg-[#00b087] rounded-sm"></div>
-                      ))}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <h1 className="text-2xl font-bold">E-Hole : 237001</h1>
+                    <Button variant="ghost" size="icon" className="p-1">
+                      <Edit className="w-4 h-4" />
+                    </Button>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                      <div className="flex gap-1">
+                        {[1, 2, 3, 4].map((i) => (
+                          <div key={i} className="w-2 h-6 bg-[#00b087] rounded-sm"></div>
+                        ))}
+                      </div>
+                      <Battery className="w-4 h-4 text-[#00b087]" />
+                      <span className="text-sm text-[#9798a1]">Battery</span>
                     </div>
-                    <Battery className="w-4 h-4 text-[#00b087]" />
-                    <span className="text-sm text-[#9798a1]">Battery</span>
+                    <div className="font-semibold">11.24V</div>
                   </div>
-                  <div className="font-semibold">11.24V</div>
                 </div>
               </div>
-            </div>
-            <Button className="bg-white border border-[#e5e7eb] text-[#000000] hover:bg-[#f8f8fb]">
-              Control Panel
-            </Button>
-          </div>
-
-          {/* Device Details */}
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle>Device Details</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-4 gap-6">
-                <div>
-                  <div className="text-sm text-[#9798a1] mb-1">Type</div>
-                  <div className="font-medium">Standard Manholes</div>
-                </div>
-                <div>
-                  <div className="text-sm text-[#9798a1] mb-1">Location</div>
-                  <div className="font-medium">Faculty of Engineering Universiti Malaya</div>
-                </div>
-                <div>
-                  <div className="text-sm text-[#9798a1] mb-1">Status</div>
-                  <Badge className="bg-[#00b087] hover:bg-[#008767]">Active</Badge>
-                </div>
-                <div>
-                  <div className="text-sm text-[#9798a1] mb-1">Maintenance Frequency</div>
-                  <div className="font-medium">4 times in a month</div>
-                </div>
-              </div>
-              <div className="grid grid-cols-4 gap-6 mt-6">
-                <div>
-                  <div className="text-sm text-[#9798a1] mb-1">Gas Threshold</div>
-                  <div className="font-medium">300 ppm</div>
-                </div>
-                <div>
-                  <div className="text-sm text-[#9798a1] mb-1">Water Level Threshold</div>
-                  <div className="font-medium">800 cm</div>
-                </div>
-                <div>
-                  <div className="text-sm text-[#9798a1] mb-1">Inflow & Outflow Pipe</div>
-                  <div className="font-medium">-</div>
-                </div>
-                <div>
-                  <div className="text-sm text-[#9798a1] mb-1">Person In-Charge</div>
-                  <div className="font-medium text-[#0e52ff]">Ze Xun, Xin Ru</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Gauges and Charts */}
-          <div className="grid grid-cols-3 gap-6">
-            {/* Left Column - Gauges */}
-            <div className="space-y-4">
-              <CircularGauge
-                title="Methane Value"
-                value="215.6 ppm"
-                min={0}
-                max={250}
-                current={215.6}
-                color="#2563eb"
-              />
-              <CircularGauge title="Roll Angle" value="0°" min={0} max={1.0} current={0} color="#2563eb" />
+              <Button className="bg-white border border-[#e5e7eb] text-[#292d32] hover:bg-[#f8f8fb] shadow-md rounded-lg px-6 py-2 font-semibold text-base">Control Panel</Button>
             </div>
 
-            {/* Middle Column - Gauges */}
-            <div className="space-y-4">
-              <CircularGauge title="Pitch Angle" value="0°" min={0} max={1.0} current={0} color="#2563eb" />
-              <CircularGauge title="Water Level" value="780 mm" min={0} max={1000} current={780} color="#2563eb" />
-            </div>
+            {/* Device Details Card */}
+            <Card className="mb-8 shadow-md border border-[#f0f2f5] rounded-xl">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg font-bold">Device Details</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-4 gap-6">
+                  <div>
+                    <div className="text-xs text-[#bfc8d6] mb-1">Type</div>
+                    <div className="font-semibold text-[#292d32]">Standard Manholes</div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-[#bfc8d6] mb-1">Location</div>
+                    <div className="font-semibold text-[#292d32]">Faculty of Engineering Universiti Malaya</div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-[#bfc8d6] mb-1">Status</div>
+                    <Badge className="bg-[#dcfce7] text-[#16a34a] hover:bg-[#dcfce7] font-semibold">Active</Badge>
+                  </div>
+                  <div>
+                    <div className="text-xs text-[#bfc8d6] mb-1">Maintenance Frequency</div>
+                    <div className="font-semibold text-[#292d32]">4 times in a month</div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-4 gap-6 mt-6">
+                  <div>
+                    <div className="text-xs text-[#bfc8d6] mb-1">Gas Threshold</div>
+                    <div className="font-semibold text-[#292d32]">300 ppm</div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-[#bfc8d6] mb-1">Water Level Threshold</div>
+                    <div className="font-semibold text-[#292d32]">800 cm</div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-[#bfc8d6] mb-1">Inflow & Outflow Pipe</div>
+                    <div className="font-semibold text-[#292d32]">-</div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-[#bfc8d6] mb-1">Person In-Charge</div>
+                    <div className="font-semibold text-[#1b59f8]">Ze Xun, Xin Ru</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
-            {/* Right Column - Charts */}
-            <div className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-sm">Methane Graph</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-32 bg-[#f8fafd] rounded border flex items-center justify-center">
-                    <img
-                      src="/placeholder.svg?height=120&width=200"
-                      alt="Methane Graph"
-                      width={200}
-                      height={120}
-                      className="opacity-50"
-                      style={{ maxWidth: 200, maxHeight: 120 }}
+            {/* Gauges and Charts */}
+            <div className="grid grid-cols-3 gap-8">
+              {/* Left Column - Gauges */}
+              <div className="space-y-6">
+                <Card className="shadow-md border border-[#f0f2f5] rounded-xl">
+                  <CardContent className="pt-4 pb-2">
+                    <CircularGauge
+                      title="Methane Value"
+                      value="215.6 ppm"
+                      min={0}
+                      max={250}
+                      current={215.6}
+                      color="#2563eb"
                     />
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-sm">Water Level Graph</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-32 bg-[#f8fafd] rounded border flex items-center justify-center">
-                    <img
-                      src="/placeholder.svg?height=120&width=200"
-                      alt="Water Level Graph"
-                      width={200}
-                      height={120}
-                      className="opacity-50"
-                      style={{ maxWidth: 200, maxHeight: 120 }}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+                <Card className="shadow-md border border-[#f0f2f5] rounded-xl">
+                  <CardContent className="pt-4 pb-2">
+                    <CircularGauge title="Roll Angle" value="0°" min={0} max={1.0} current={0} color="#2563eb" />
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Middle Column - Gauges */}
+              <div className="space-y-6">
+                <Card className="shadow-md border border-[#f0f2f5] rounded-xl">
+                  <CardContent className="pt-4 pb-2">
+                    <CircularGauge title="Pitch Angle" value="0°" min={0} max={1.0} current={0} color="#2563eb" />
+                  </CardContent>
+                </Card>
+                <Card className="shadow-md border border-[#f0f2f5] rounded-xl">
+                  <CardContent className="pt-4 pb-2">
+                    <CircularGauge title="Water Level" value="780 mm" min={0} max={1000} current={780} color="#2563eb" />
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Right Column - Charts */}
+              <div className="space-y-6">
+                <Card className="shadow-md border border-[#f0f2f5] rounded-xl">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-bold">Methane Graph</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-32 bg-[#f8fafd] rounded border flex items-center justify-center">
+                      <img
+                        src="/placeholder.svg?height=120&width=200"
+                        alt="Methane Graph"
+                        width={200}
+                        height={120}
+                        className="opacity-50"
+                        style={{ maxWidth: 200, maxHeight: 120 }}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="shadow-md border border-[#f0f2f5] rounded-xl">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-bold">Water Level Graph</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-32 bg-[#f8fafd] rounded border flex items-center justify-center">
+                      <img
+                        src="/placeholder.svg?height=120&width=200"
+                        alt="Water Level Graph"
+                        width={200}
+                        height={120}
+                        className="opacity-50"
+                        style={{ maxWidth: 200, maxHeight: 120 }}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   )
 }

@@ -31,284 +31,246 @@ export default function Dashboard3() {
   const [panAngle, setPanAngle] = useState([90])
 
   return (
-    <div className="min-h-screen bg-[#fafbff] flex">
+    <div className="flex min-h-screen bg-[#f7f9fb]">
       {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-[#e5e7eb] flex flex-col">
-        {/* Logo */}
-        <div className="p-6 border-b border-[#e5e7eb]">
+      <aside className="fixed left-6 top-6 bottom-6 w-56 z-30 bg-white rounded-2xl shadow-sm border border-[#f0f2f5] flex flex-col transition-all">
+        <div className="p-4 border-b border-[#f0f2f5]">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-[#1b59f8] rounded-lg flex items-center justify-center">
               <div className="w-4 h-4 bg-white rounded-sm"></div>
             </div>
             <div>
-              <div className="font-semibold text-[#000000] text-sm">Smart Manhole</div>
-              <div className="text-xs text-[#9798a1]">Monitoring System</div>
+              <h1 className="font-semibold text-[#292d32] text-sm">Smart Manhole</h1>
+              <p className="text-xs text-[#bfc8d6]">Monitoring System</p>
             </div>
           </div>
         </div>
-
-        {/* Navigation */}
-        <nav className="flex-1 p-4">
-          <div className="space-y-2">
+        <nav className="flex-1 p-2">
+          <div className="space-y-1">
             <Button
               variant="ghost"
-              className="w-full justify-start text-[#9798a1] hover:text-[#000000] hover:bg-[#f8f8fb]"
+              className="w-full justify-start gap-3 rounded-lg !pl-5 !py-2 !text-base transition-all font-semibold text-[#bfc8d6] hover:text-[#292d32] hover:bg-[#f5f7fa] border-l-4 border-transparent"
             >
-              <Home className="w-4 h-4 mr-3" />
+              <Home className="w-4 h-4" />
               Home
             </Button>
-            <Button className="w-full justify-start bg-[#eff0f6] text-[#1b59f8] hover:bg-[#eff0f6]">
-              <Zap className="w-4 h-4 mr-3" />
+            <Button className="w-full justify-start gap-3 bg-[#f5f7fa] text-[#1b59f8] font-bold rounded-lg border-l-4 border-[#1b59f8] !pl-5 !py-2 shadow-none !text-base !font-semibold">
+              <Zap className="w-4 h-4" />
               E-Hole
             </Button>
             <Button
               variant="ghost"
-              className="w-full justify-start text-[#9798a1] hover:text-[#000000] hover:bg-[#f8f8fb]"
+              className="w-full justify-start gap-3 rounded-lg !pl-5 !py-2 !text-base transition-all font-semibold text-[#bfc8d6] hover:text-[#292d32] hover:bg-[#f5f7fa] border-l-4 border-transparent"
             >
-              <FileText className="w-4 h-4 mr-3" />
+              <FileText className="w-4 h-4" />
               Reporting Case
             </Button>
           </div>
-
-          <div className="mt-8">
-            <div className="text-xs font-medium text-[#9798a1] mb-3 px-3">Support</div>
-            <div className="space-y-2">
+          <div className="mt-6">
+            <p className="text-xs font-medium text-[#d1d5db] mb-2">Support</p>
+            <div className="space-y-1">
               <Button
                 variant="ghost"
-                className="w-full justify-start text-[#9798a1] hover:text-[#000000] hover:bg-[#f8f8fb]"
+                className="w-full justify-start gap-3 text-[#bfc8d6] hover:bg-[#f5f7fa] rounded-lg !pl-5 !py-2 !text-base"
               >
-                <HelpCircle className="w-4 h-4 mr-3" />
+                <HelpCircle className="w-4 h-4" />
                 Get Started
               </Button>
               <Button
                 variant="ghost"
-                className="w-full justify-start text-[#9798a1] hover:text-[#000000] hover:bg-[#f8f8fb]"
+                className="w-full justify-start gap-3 text-[#bfc8d6] hover:bg-[#f5f7fa] rounded-lg !pl-5 !py-2 !text-base"
               >
-                <Settings className="w-4 h-4 mr-3" />
+                <Settings className="w-4 h-4" />
                 Settings
               </Button>
             </div>
           </div>
         </nav>
-
-        {/* Logout */}
-        <div className="p-4 border-t border-[#e5e7eb]">
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-[#e51837] hover:text-[#e51837] hover:bg-[#f8f8fb]"
-          >
-            <LogOut className="w-4 h-4 mr-3" />
+        <div className="mt-auto p-4">
+          <Button variant="ghost" className="w-full justify-start gap-3 text-[#df0404] hover:bg-[#fef2f2] rounded-lg font-semibold !text-base">
+            <LogOut className="w-4 h-4" />
             Logout
           </Button>
         </div>
-      </div>
+      </aside>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <header className="bg-white border-b border-[#e5e7eb] px-8 py-4 flex items-center justify-between">
-          <div className="text-sm text-[#9798a1]">Last Updated: 2025-01-15 14:32</div>
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="text-[#9798a1]">
-              <Bell className="w-5 h-5" />
-            </Button>
-            <div className="flex items-center gap-3">
-              <Avatar className="w-8 h-8">
-                <AvatarImage src="/placeholder.svg?height=32&width=32" />
-                <AvatarFallback className="bg-[#9333ea] text-white text-sm">MW</AvatarFallback>
-              </Avatar>
-              <div className="flex items-center gap-1">
-                <span className="text-sm font-medium text-[#000000]">Melody Wong</span>
-                <ChevronDown className="w-4 h-4 text-[#9798a1]" />
+      {/* Main Content Floating Card */}
+      <main className="flex-1 flex flex-col ml-[15rem] mr-6 mt-6 mb-6">
+        <div className="max-w-[1500px] mx-auto w-full">
+          {/* Header */}
+          <header className="flex items-center justify-between mb-4 pt-2 pb-2">
+            <div></div>
+            <p className="text-xs text-[#cfd8e3] font-medium mt-1">Last Updated: 2025-01-15 14:32</p>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="icon" className="relative p-2 h-9 w-9">
+                <Bell className="w-5 h-5 text-[#bfc8d6]" />
+                <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-[#df0404] rounded-full border-2 border-white"></div>
+              </Button>
+              <div className="flex items-center gap-2">
+                <Avatar className="w-8 h-8">
+                  <AvatarImage src="/placeholder.svg?height=32&width=32" />
+                  <AvatarFallback className="bg-[#1b59f8] text-white text-sm">MW</AvatarFallback>
+                </Avatar>
+                <span className="text-sm font-semibold text-[#292d32]">Melody Wong</span>
+                <ChevronDown className="w-4 h-4 text-[#bfc8d6]" />
               </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        {/* Content */}
-        <main className="flex-1 p-8">
-          <div className="max-w-7xl mx-auto">
+          {/* Main Card */}
+          <div className="bg-white rounded-2xl shadow-lg border border-[#f0f2f5] px-10 py-8">
             {/* Title and Report Button */}
             <div className="flex items-center justify-between mb-8">
-              <h1 className="text-3xl font-bold text-[#000000]">E-Hole : 237001</h1>
-              <Button className="bg-[#dc2626] hover:bg-[#b91c1c] text-white">
-                <AlertTriangle className="w-4 h-4 mr-2" />
+              <div className="flex items-center gap-8">
+                <div className="w-32 h-32 bg-[#f8f8fb] rounded-full flex items-center justify-center overflow-hidden border border-[#e5e7eb]">
+                  <img
+                    src="/placeholder.svg?height=200&width=200"
+                    alt="Manhole monitoring device"
+                    width={200}
+                    height={200}
+                    className="object-contain w-28 h-28"
+                  />
+                </div>
+                <div className="grid grid-cols-3 gap-8">
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Battery className="w-4 h-4 text-[#00b087]" />
+                      <span className="text-sm text-[#9798a1]">Battery</span>
+                    </div>
+                    <div className="font-bold text-[#292d32] text-lg">11.24V</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-[#9798a1] mb-2">Status</div>
+                    <Badge className="bg-[#dcfce7] text-[#16a34a] hover:bg-[#dcfce7] font-semibold">Active</Badge>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <MapPin className="w-4 h-4 text-[#9798a1]" />
+                      <span className="text-sm text-[#9798a1]">Location</span>
+                    </div>
+                    <div className="text-sm font-semibold text-[#292d32] leading-tight">
+                      Faculty of Engineering<br />Universiti Malaya
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <Button className="bg-[#dc2626] hover:bg-[#b91c1c] text-white font-bold px-8 py-3 rounded-lg text-base shadow-md">
+                <AlertTriangle className="w-5 h-5 mr-2" />
                 Report
               </Button>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Device Image and Status */}
-              <div className="lg:col-span-1">
-                <Card className="p-6">
-                  <CardContent className="p-0">
-                    <div className="aspect-square bg-[#f8f8fb] rounded-lg mb-6 flex items-center justify-center">
-                      <img
-                        src="/placeholder.svg?height=200&width=200"
-                        alt="Manhole monitoring device"
-                        width={200}
-                        height={200}
-                        className="object-contain"
-                        style={{ maxWidth: 200, maxHeight: 200 }}
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-4">
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <Battery className="w-4 h-4 text-[#00b087]" />
-                          <span className="text-sm text-[#9798a1]">Battery</span>
-                        </div>
-                        <div className="font-semibold text-[#000000]">11.24V</div>
-                      </div>
-
-                      <div>
-                        <div className="text-sm text-[#9798a1] mb-2">Status</div>
-                        <Badge className="bg-[#00b087] hover:bg-[#008767] text-white">Active</Badge>
-                      </div>
-
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <MapPin className="w-4 h-4 text-[#9798a1]" />
-                          <span className="text-sm text-[#9798a1]">Location</span>
-                        </div>
-                        <div className="text-sm font-medium text-[#000000]">
-                          Faculty of Engineering
-                          <br />
-                          Universiti Malaya
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Controls */}
-              <div className="lg:col-span-2 space-y-6">
-                {/* Toggle Controls */}
-                <Card className="p-6">
-                  <CardContent className="p-0">
-                    <div className="grid grid-cols-4 gap-6">
-                      <div>
-                        <div className="text-sm text-[#9798a1] mb-3">Water Jet (Inlet)</div>
-                        <Switch
-                          checked={waterJetInlet}
-                          onCheckedChange={setWaterJetInlet}
-                          className="data-[state=checked]:bg-[#9333ea]"
-                        />
-                      </div>
-
-                      <div>
-                        <div className="text-sm text-[#9798a1] mb-3">Water Jet (Outlet)</div>
-                        <Switch
-                          checked={waterJetOutlet}
-                          onCheckedChange={setWaterJetOutlet}
-                          className="data-[state=checked]:bg-[#9333ea]"
-                        />
-                      </div>
-
-                      <div>
-                        <div className="text-sm text-[#9798a1] mb-3">Blower</div>
-                        <Switch
-                          checked={blower}
-                          onCheckedChange={setBlower}
-                          className="data-[state=checked]:bg-[#9333ea]"
-                        />
-                      </div>
-
-                      <div>
-                        <div className="text-sm text-[#9798a1] mb-3">Camera Quality</div>
-                        <div className="bg-[#e5e7eb] px-3 py-2 rounded-md text-sm font-medium text-[#000000]">
-                          Medium
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Action Buttons */}
-                <div className="flex gap-4">
-                  <Button className="bg-[#60a5fa] hover:bg-[#3b82f6] text-white">
-                    <Scan className="w-4 h-4 mr-2" />
-                    Scan
-                  </Button>
-                  <Button className="bg-[#9333ea] hover:bg-[#7c3aed] text-white">
-                    <Camera className="w-4 h-4 mr-2" />
-                    Capture Image
-                  </Button>
+            {/* Controls Row */}
+            <div className="flex flex-wrap gap-8 mb-8">
+              {/* Switches */}
+              <div className="flex gap-8">
+                <div className="flex flex-col items-center">
+                  <span className="text-sm text-[#9798a1] mb-2">Water Jet (Inlet)</span>
+                  <Switch
+                    checked={waterJetInlet}
+                    onCheckedChange={setWaterJetInlet}
+                    className="data-[state=checked]:bg-[#9333ea]"
+                  />
                 </div>
-
-                {/* Angle Controls */}
-                <Card className="p-6">
-                  <CardContent className="p-0">
-                    <div className="grid grid-cols-2 gap-8">
-                      <div>
-                        <div className="flex items-center justify-between mb-4">
-                          <span className="text-sm text-[#9798a1]">Tilt Angle</span>
-                          <span className="font-semibold text-[#000000]">{tiltAngle[0]}</span>
-                        </div>
-                        <Slider
-                          value={tiltAngle}
-                          onValueChange={setTiltAngle}
-                          max={180}
-                          step={1}
-                          className="[&_[role=slider]]:bg-[#00b087] [&_[role=slider]]:border-[#00b087]"
-                        />
-                      </div>
-
-                      <div>
-                        <div className="flex items-center justify-between mb-4">
-                          <span className="text-sm text-[#9798a1]">Pan Angle</span>
-                          <span className="font-semibold text-[#000000]">{panAngle[0]}</span>
-                        </div>
-                        <Slider
-                          value={panAngle}
-                          onValueChange={setPanAngle}
-                          max={180}
-                          step={1}
-                          className="[&_[role=slider]]:bg-[#00b087] [&_[role=slider]]:border-[#00b087]"
-                        />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Data Table */}
-                <Card className="p-6">
-                  <CardContent className="p-0">
-                    <div className="overflow-x-auto">
-                      <table className="w-full">
-                        <thead>
-                          <tr className="border-b border-[#e5e7eb]">
-                            <th className="text-left py-3 text-sm text-[#9798a1] font-medium">Timestamp</th>
-                            <th className="text-left py-3 text-sm text-[#9798a1] font-medium">Angle (Pan, Tilt)</th>
-                            <th className="text-left py-3 text-sm text-[#9798a1] font-medium">Image</th>
-                            <th className="text-left py-3 text-sm text-[#9798a1] font-medium">Remark</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td className="py-4 text-sm text-[#000000]">
-                              2025-06-30
-                              <br />
-                              14:52:30.98600
-                              <br />
-                              0+00:00
-                            </td>
-                            <td className="py-4 text-sm text-[#000000]">90, 95</td>
-                            <td className="py-4 text-sm text-[#000000]">-</td>
-                            <td className="py-4 text-sm text-[#000000]">Normal Condition</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </CardContent>
-                </Card>
+                <div className="flex flex-col items-center">
+                  <span className="text-sm text-[#9798a1] mb-2">Water Jet (Outlet)</span>
+                  <Switch
+                    checked={waterJetOutlet}
+                    onCheckedChange={setWaterJetOutlet}
+                    className="data-[state=checked]:bg-[#9333ea]"
+                  />
+                </div>
+                <div className="flex flex-col items-center">
+                  <span className="text-sm text-[#9798a1] mb-2">Blower</span>
+                  <Switch
+                    checked={blower}
+                    onCheckedChange={setBlower}
+                    className="data-[state=checked]:bg-[#9333ea]"
+                  />
+                </div>
+              </div>
+              {/* Camera Quality */}
+              <div className="flex flex-col items-center">
+                <span className="text-sm text-[#9798a1] mb-2">Camera Quality</span>
+                <div className="bg-[#e5e7eb] px-6 py-2 rounded-md text-base font-semibold text-[#292d32]">Medium</div>
+              </div>
+              {/* Action Buttons */}
+              <div className="flex gap-4 items-end">
+                <Button className="bg-[#60a5fa] hover:bg-[#3b82f6] text-white font-bold px-6 py-2 rounded-lg text-base">
+                  <Scan className="w-4 h-4 mr-2" />
+                  Scan
+                </Button>
+                <Button className="bg-[#9333ea] hover:bg-[#7c3aed] text-white font-bold px-6 py-2 rounded-lg text-base">
+                  <Camera className="w-4 h-4 mr-2" />
+                  Capture Image
+                </Button>
               </div>
             </div>
-          </div>
-        </main>
-      </div>
+
+            {/* Angle Controls */}
+            <div className="grid grid-cols-2 gap-8 mb-8">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-sm text-[#9798a1]">Tilt Angle</span>
+                  <span className="font-bold text-[#292d32] text-base">{tiltAngle[0]}</span>
+                </div>
+                <Slider
+                  value={tiltAngle}
+                  onValueChange={setTiltAngle}
+                  max={180}
+                  step={1}
+                  className="[&_[role=slider]]:bg-[#00b087] [&_[role=slider]]:border-[#00b087] [&>div]:bg-[#dcfce7] h-2"
+                />
+              </div>
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-sm text-[#9798a1]">Pan Angle</span>
+                  <span className="font-bold text-[#292d32] text-base">{panAngle[0]}</span>
+                </div>
+                <Slider
+                  value={panAngle}
+                  onValueChange={setPanAngle}
+                  max={180}
+                  step={1}
+                  className="[&_[role=slider]]:bg-[#00b087] [&_[role=slider]]:border-[#00b087] [&>div]:bg-[#dcfce7] h-2"
+                />
+              </div>
+            </div>
+
+            {/* Data Table */}
+            <Card className="shadow-md border border-[#f0f2f5] rounded-xl">
+              <CardContent className="p-0">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-[#e5e7eb]">
+                        <th className="text-left py-3 text-sm text-[#bfc8d6] font-semibold">Timestamp</th>
+                        <th className="text-left py-3 text-sm text-[#bfc8d6] font-semibold">Angle (Pan, Tilt)</th>
+                        <th className="text-left py-3 text-sm text-[#bfc8d6] font-semibold">Image</th>
+                        <th className="text-left py-3 text-sm text-[#bfc8d6] font-semibold">Remark</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="py-4 text-sm text-[#292d32]">
+                          2025-06-30
+                          <br />
+                          14:52:30.98600
+                          <br />
+                          0+00:00
+                        </td>
+                        <td className="py-4 text-sm text-[#292d32]">90, 95</td>
+                        <td className="py-4 text-sm text-[#292d32]">-</td>
+                        <td className="py-4 text-sm text-[#292d32]">Normal Condition</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          </div> {/* End Main Card */}
+        </div> {/* End max-w container */}
+      </main>
     </div>
   )
 }
