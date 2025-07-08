@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import axios from "axios"
 import {
   Bell,
   ChevronDown,
@@ -26,6 +27,44 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 
 export default function Dashboard1() {
   const [activeFilter, setActiveFilter] = useState("All Manholes")
+
+  // Weather API integration (Penang, Malaysia)
+  const [weather, setWeather] = useState({
+    temp: null as number | null,
+    icon: "",
+    main: "",
+    city: "Penang",
+    country: "MY",
+    loading: true,
+    desc: "",
+  })
+
+  const fetchWeather = async () => {
+    setWeather((w) => ({ ...w, loading: true }))
+    try {
+      const apiKey = "YOUR_OPENWEATHERMAP_API_KEY" // <-- Replace with your API key
+      const lat = 5.4141
+      const lon = 100.3288
+      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
+      const res = await axios.get(url)
+      const data = res.data
+      setWeather({
+        temp: Math.round(data.main.temp),
+        icon: data.weather[0].icon,
+        main: data.weather[0].main,
+        city: data.name || "Penang",
+        country: data.sys.country || "MY",
+        loading: false,
+        desc: data.weather[0].description,
+      })
+    } catch (e) {
+      setWeather((w) => ({ ...w, loading: false }))
+    }
+  }
+
+  useEffect(() => {
+    fetchWeather()
+  }, [])
 
   const manholeData = [
     {
@@ -204,21 +243,23 @@ export default function Dashboard1() {
               {/* Map Section */}
               <Card className="flex-[2.5] bg-white border border-[#f0f2f5] shadow rounded-xl flex flex-col justify-between min-h-[340px]">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base font-bold text-[#292d32]">Taipei City Overview Map</CardTitle>
+                  <CardTitle className="text-base font-bold text-[#292d32]">Penang Overview Map</CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col justify-between">
                   <div className="relative h-72 rounded-lg overflow-hidden mb-2">
-                    <img
-                      src="/map-demo.png"
-                      alt="Taipei City Map"
-                      className="absolute inset-0 w-full h-full object-cover opacity-95"
-                    />
-                    {/* Status markers (pixel-tweaked positions) */}
-                    <div className="absolute top-[70px] left-[120px] w-4 h-4 bg-[#16a34a] rounded-full border-2 border-white shadow-lg"></div>
-                    <div className="absolute top-[120px] right-[110px] w-4 h-4 bg-[#dc2626] rounded-full border-2 border-white shadow-lg"></div>
-                    <div className="absolute bottom-[60px] left-[160px] w-4 h-4 bg-[#ea580c] rounded-full border-2 border-white shadow-lg"></div>
-                    <div className="absolute bottom-[80px] right-[150px] w-4 h-4 bg-[#7e22ce] rounded-full border-2 border-white shadow-lg"></div>
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-[#ea580c] rounded-full border-2 border-white shadow-lg"></div>
+                    {/* OpenStreetMap static embed centered at Penang, Malaysia, bbox width ~0.018 deg = ~2km at Penang's latitude */}
+                    <div className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center">
+                      {/* SVG circle overlay for 1km radius (now matches map width) */}
+                      <svg width="100%" height="100%" viewBox="0 0 400 220" className="absolute top-0 left-0">
+                        <circle cx="200" cy="110" r="100" fill="rgba(27,89,248,0.15)" stroke="#1b59f8" strokeWidth="2" />
+                      </svg>
+                    </div>
+                    <iframe
+                      title="Penang Map"
+                      src="https://www.openstreetmap.org/export/embed.html?bbox=100.3198%2C5.4041%2C100.3378%2C5.4241&layer=mapnik&marker=5.4141%2C100.3288"
+                      className="w-full h-full border-0 z-0"
+                      allowFullScreen
+                    ></iframe>
                   </div>
                   {/* Legend */}
                   <div className="flex items-center justify-center gap-7 mt-2 text-xs">
@@ -244,28 +285,42 @@ export default function Dashboard1() {
 
               {/* Right Panel Floating Card */}
               <div className="flex-1 flex flex-col gap-7 min-w-[320px]">
+                {/* Weather Card */}
                 <Card className="bg-white border border-[#f0f2f5] shadow rounded-xl flex-1">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base font-bold text-[#292d32]">Weather Forecast</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-[#bfc8d6]">Current</span>
-                      <div className="flex items-center gap-2">
-                        <Cloud className="w-4 h-4 text-[#bfc8d6]" />
-                        <span className="text-xs text-[#292d32]">Light Rain</span>
-                      </div>
+                    <div className="flex items-center gap-3 mb-2">
+                      {weather.loading ? (
+                        <div className="w-12 h-12 bg-[#f5f7fa] rounded-full animate-pulse" />
+                      ) : (
+                        <img
+                          src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
+                          alt="Weather Icon"
+                          className="w-12 h-12"
+                        />
+                      )}
+                      <span className="text-3xl font-bold text-[#292d32]">
+                        {weather.loading || weather.temp === null ? "--" : `${weather.temp}°C`}
+                      </span>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-[#bfc8d6]">Rainfall</span>
-                      <span className="text-xs text-[#292d32]">2.5mm/hr</span>
+                    <div className="text-lg font-semibold text-[#1b59f8] mb-1">
+                      {weather.city}, {weather.country}
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-[#bfc8d6]">Risk Level</span>
-                      <Badge className="bg-[#ffedd5] text-[#ea580c] hover:bg-[#ffedd5] font-semibold text-xs">Medium</Badge>
+                    <div className="text-base text-[#7e7e7e] capitalize">
+                      {weather.loading ? "Loading..." : weather.desc || weather.main}
                     </div>
+                    <Button
+                      className="mt-2 px-4 py-2 bg-[#f5f7fa] text-[#1b59f8] rounded-full font-semibold text-sm hover:bg-[#e5e7eb] transition"
+                      onClick={fetchWeather}
+                      disabled={weather.loading}
+                    >
+                      {weather.loading ? "Refreshing..." : "Refresh"}
+                    </Button>
                   </CardContent>
                 </Card>
+                {/* Active Alerts card */}
                 <Card className="bg-white border border-[#f0f2f5] shadow rounded-xl flex-1">
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-base font-bold text-[#292d32]">Active Alerts</CardTitle>
