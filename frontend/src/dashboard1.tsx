@@ -24,47 +24,66 @@ import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./components/ui/dropdown-menu"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./components/ui/table"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./components/ui/select"
+import { RefreshCw } from "lucide-react"
+import profilePic from "./assets/profilepic.png";
+import TotalManholeIcon from "./assets/TotalManhole.png";
+import { Check } from "lucide-react";
+
 
 export default function Dashboard1() {
   const [activeFilter, setActiveFilter] = useState("All Manholes")
 
   // Weather API integration (Penang, Malaysia)
-  const [weather, setWeather] = useState({
-    temp: null as number | null,
-    icon: "",
-    main: "",
-    city: "Penang",
-    country: "MY",
-    loading: true,
-    desc: "",
-  })
+const [weather, setWeather] = useState({
+  temp: null as number | null,
+  feelsLike: null as number | null,
+  desc: "",
+  icon: "",
+  windSpeed: null as number | null,
+  windDeg: null as number | null,
+  pressure: null as number | null,
+  humidity: null as number | null,
+  visibility: null as number | null,
+  city: "Penang",
+  country: "MY",
+  loading: true,
+})
 
-  const fetchWeather = async () => {
-    setWeather((w) => ({ ...w, loading: true }))
-    try {
-      const apiKey = "YOUR_OPENWEATHERMAP_API_KEY" // <-- Replace with your API key
-      const lat = 5.4141
-      const lon = 100.3288
-      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
-      const res = await axios.get(url)
-      const data = res.data
-      setWeather({
-        temp: Math.round(data.main.temp),
-        icon: data.weather[0].icon,
-        main: data.weather[0].main,
-        city: data.name || "Penang",
-        country: data.sys.country || "MY",
-        loading: false,
-        desc: data.weather[0].description,
-      })
-    } catch (e) {
-      setWeather((w) => ({ ...w, loading: false }))
-    }
+useEffect(() => {
+  fetchWeather()
+}, [])
+
+
+const fetchWeather = async () => {
+  setWeather((w) => ({ ...w, loading: true }))
+  try {
+    const apiKey = "0c152ca23179fadb18e16da545ce1d20"
+    const lat = 5.4141
+    const lon = 100.3288
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
+    const res = await axios.get(url)
+    const data = res.data
+
+    setWeather({
+      temp: Math.round(data.main.temp),
+      feelsLike: Math.round(data.main.feels_like),
+      desc: data.weather[0].description,
+      icon: data.weather[0].icon,
+      windSpeed: data.wind.speed,
+      windDeg: data.wind.deg,
+      pressure: data.main.pressure,
+      humidity: data.main.humidity,
+      visibility: data.visibility,
+      city: data.name,
+      country: data.sys.country,
+      loading: false,
+    })
+  } catch (e) {
+    console.error("Weather fetch error:", e)
+    setWeather((w) => ({ ...w, loading: false }))
   }
+}
 
-  useEffect(() => {
-    fetchWeather()
-  }, [])
 
   const manholeData = [
     {
@@ -164,80 +183,91 @@ export default function Dashboard1() {
         <div className="max-w-[1500px] mx-auto w-full">
           <div className="bg-white rounded-2xl shadow-lg border border-[#f0f2f5] px-12 py-8">
             {/* Header */}
-            <header className="flex items-center justify-between mb-6 pt-0 pb-2 min-h-[44px]">
-              <p className="text-xs text-[#e3e8ee] font-medium mt-0 ml-0 absolute left-0 top-0 pt-4 pl-12">Last Updated: 2025-01-15 14:32</p>
-              <div className="flex items-center gap-3 ml-auto mt-2 mr-1 relative z-10">
-                <Button variant="ghost" size="icon" className="relative p-0 h-10 w-10 flex items-center justify-center">
-                  <Bell className="w-6 h-6 text-[#9098a3]" />
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#df0404] rounded-full border-2 border-white shadow"></div>
-                </Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="flex items-center gap-1 p-0 h-10 min-w-0">
-                      <Avatar className="w-8 h-8">
-                        <AvatarImage src="/placeholder.svg?height=32&width=32" />
-                        <AvatarFallback className="bg-[#1b59f8] text-white text-sm">MW</AvatarFallback>
-                      </Avatar>
-                      <span className="text-sm font-normal text-[#5a6473] ml-2">Melody Wong</span>
-                      <ChevronDown className="w-3 h-3 text-[#bfc8d6] ml-1" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="min-w-[120px] px-0 py-1">
-                    <DropdownMenuItem className="px-4 py-1 text-left">Profile</DropdownMenuItem>
-                    <DropdownMenuItem className="px-4 py-1 text-left">Settings</DropdownMenuItem>
-                    <DropdownMenuItem className="px-4 py-1 text-left">Logout</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </header>
+<header className="flex items-center justify-between mb-6 pt-0 pb-2 min-h-[44px]">
+  {/* Last Updated on the left */}
+  <p className="text-xs text-[#626569] font-medium pt-4">
+    Last Updated: 2025-01-15 14:32
+  </p>
 
-            {/* Metrics Cards */}
-            <div className="flex gap-7 mb-7">
-              <Card className="flex-1 bg-white border border-[#f0f2f5] shadow rounded-lg">
-                <CardContent className="p-5 flex items-center gap-4">
-                  <div className="flex-1">
-                    <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Total Manholes</p>
-                    <p className="text-2xl font-bold text-[#292d32]">24</p>
-                  </div>
-                  <div className="w-8 h-8 bg-[#eaf1ff] rounded-lg flex items-center justify-center">
-                    <div className="w-5 h-5 bg-[#2563eb] rounded"></div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="flex-1 bg-white border border-[#f0f2f5] shadow rounded-lg">
-                <CardContent className="p-5 flex items-center gap-4">
-                  <div className="flex-1">
-                    <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Active Alerts</p>
-                    <p className="text-2xl font-bold text-[#292d32]">3</p>
-                  </div>
-                  <div className="w-8 h-8 bg-[#fee2e2] rounded-lg flex items-center justify-center">
-                    <AlertTriangle className="w-5 h-5 text-[#dc2626]" />
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="flex-1 bg-white border border-[#f0f2f5] shadow rounded-lg">
-                <CardContent className="p-5 flex items-center gap-4">
-                  <div className="flex-1">
-                    <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Normal Status</p>
-                    <p className="text-2xl font-bold text-[#292d32]">19</p>
-                  </div>
-                  <div className="w-8 h-8 bg-[#dcfce7] rounded-lg flex items-center justify-center">
-                    <div className="w-5 h-5 bg-[#16a34a] rounded-full"></div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="flex-1 bg-white border border-[#f0f2f5] shadow rounded-lg">
-                <CardContent className="p-5 flex items-center gap-4">
-                  <div className="flex-1">
-                    <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Maintenance Due</p>
-                    <p className="text-2xl font-bold text-[#292d32]">2</p>
-                  </div>
-                  <div className="w-8 h-8 bg-[#ffedd5] rounded-lg flex items-center justify-center">
-                    <Wrench className="w-5 h-5 text-[#ea580c]" />
-                  </div>
-                </CardContent>
-              </Card>
+          {/* Notification + Profile on the right */}
+          <div className="flex items-center gap-4 mt-2">
+            {/* Notification Bell */}
+            <Button variant="ghost" size="icon" className="relative p-0 h-10 w-10 flex items-center justify-center">
+              <Bell className="w-6 h-6 text-[#9098a3]" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#df0404] rounded-full border-2 border-white shadow" />
+            </Button>
+
+            {/* Avatar + Name */}
+            <div className="flex items-center gap-2">
+             <Avatar className="w-8 h-8">
+            <AvatarImage src={profilePic} />
+          </Avatar>
+              <span className="text-sm font-normal text-[#5a6473]">Melody Wong</span>
             </div>
+          </div>
+        </header>
+
+
+
+          {/* Metrics Cards */}
+          <div className="flex gap-7 mb-7">
+            {/* Total Manholes */}
+            <Card className="flex-1 bg-white border border-[#f0f2f5] shadow rounded-lg">
+              <CardContent className="p-5 flex items-center gap-4">
+                <div className="flex-1">
+                  <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Total Manholes</p>
+                  <p className="text-2xl font-bold text-[#292d32]">24</p>
+                </div>
+                <div className="w-8 h-8 bg-[#eaf1ff] rounded-lg flex items-center justify-center">
+                  <img
+                    src={TotalManholeIcon}
+                    alt="Total Manholes Icon"
+                    className="w-5 h-5 object-contain"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Active Alerts */}
+            <Card className="flex-1 bg-white border border-[#f0f2f5] shadow rounded-lg">
+              <CardContent className="p-5 flex items-center gap-4">
+                <div className="flex-1">
+                  <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Active Alerts</p>
+                  <p className="text-2xl font-bold text-[#292d32]">3</p>
+                </div>
+                <div className="w-8 h-8 bg-[#fee2e2] rounded-lg flex items-center justify-center">
+                  <AlertTriangle className="w-5 h-5 text-[#dc2626]" />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Normal Status */}
+            <Card className="flex-1 bg-white border border-[#f0f2f5] shadow rounded-lg">
+              <CardContent className="p-5 flex items-center gap-4">
+                <div className="flex-1">
+                  <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Normal Status</p>
+                  <p className="text-2xl font-bold text-[#292d32]">19</p>
+                </div>
+                <div className="w-8 h-8 bg-[#dcfce7] rounded-lg flex items-center justify-center">
+                  <Check className="w-5 h-5 text-[#16a34a]" />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Maintenance Due */}
+            <Card className="flex-1 bg-white border border-[#f0f2f5] shadow rounded-lg">
+              <CardContent className="p-5 flex items-center gap-4">
+                <div className="flex-1">
+                  <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Maintenance Due</p>
+                  <p className="text-2xl font-bold text-[#292d32]">2</p>
+                </div>
+                <div className="w-8 h-8 bg-[#ffedd5] rounded-lg flex items-center justify-center">
+                  <Wrench className="w-5 h-5 text-[#ea580c]" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
 
             <div className="flex gap-7 mb-7">
               {/* Map Section */}
@@ -245,22 +275,15 @@ export default function Dashboard1() {
                 <CardHeader className="pb-2">
                   <CardTitle className="text-base font-bold text-[#292d32]">Penang Overview Map</CardTitle>
                 </CardHeader>
-                <CardContent className="flex-1 flex flex-col justify-between">
-                  <div className="relative h-72 rounded-lg overflow-hidden mb-2">
-                    {/* OpenStreetMap static embed centered at Penang, Malaysia, bbox width ~0.018 deg = ~2km at Penang's latitude */}
-                    <div className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center">
-                      {/* SVG circle overlay for 1km radius (now matches map width) */}
-                      <svg width="100%" height="100%" viewBox="0 0 400 220" className="absolute top-0 left-0">
-                        <circle cx="200" cy="110" r="100" fill="rgba(27,89,248,0.15)" stroke="#1b59f8" strokeWidth="2" />
-                      </svg>
-                    </div>
-                    <iframe
-                      title="Penang Map"
-                      src="https://www.openstreetmap.org/export/embed.html?bbox=100.3198%2C5.4041%2C100.3378%2C5.4241&layer=mapnik&marker=5.4141%2C100.3288"
-                      className="w-full h-full border-0 z-0"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
+              <CardContent className="flex-1 flex flex-col">
+                <div className="relative flex-1 rounded-lg overflow-hidden mb-2">
+                  <iframe
+                    title="Penang Map"
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=100.3198%2C5.4041%2C100.3378%2C5.4241&layer=mapnik&marker=5.4141%2C100.3288"
+                    className="absolute inset-0 w-full h-full border-0 z-0"
+                    allowFullScreen
+                  ></iframe>
+                </div>
                   {/* Legend */}
                   <div className="flex items-center justify-center gap-7 mt-2 text-xs">
                     <div className="flex items-center gap-2">
@@ -286,81 +309,102 @@ export default function Dashboard1() {
               {/* Right Panel Floating Card */}
               <div className="flex-1 flex flex-col gap-7 min-w-[320px]">
                 {/* Weather Card */}
-                <Card className="bg-white border border-[#f0f2f5] shadow rounded-xl flex-1">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base font-bold text-[#292d32]">Weather Forecast</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    <div className="flex items-center gap-3 mb-2">
-                      {weather.loading ? (
-                        <div className="w-12 h-12 bg-[#f5f7fa] rounded-full animate-pulse" />
-                      ) : (
-                        <img
-                          src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
-                          alt="Weather Icon"
-                          className="w-12 h-12"
-                        />
-                      )}
-                      <span className="text-3xl font-bold text-[#292d32]">
-                        {weather.loading || weather.temp === null ? "--" : `${weather.temp}°C`}
-                      </span>
-                    </div>
-                    <div className="text-lg font-semibold text-[#1b59f8] mb-1">
-                      {weather.city}, {weather.country}
-                    </div>
-                    <div className="text-base text-[#7e7e7e] capitalize">
-                      {weather.loading ? "Loading..." : weather.desc || weather.main}
-                    </div>
-                    <Button
-                      className="mt-2 px-4 py-2 bg-[#f5f7fa] text-[#1b59f8] rounded-full font-semibold text-sm hover:bg-[#e5e7eb] transition"
-                      onClick={fetchWeather}
-                      disabled={weather.loading}
-                    >
-                      {weather.loading ? "Refreshing..." : "Refresh"}
-                    </Button>
-                  </CardContent>
-                </Card>
-                {/* Active Alerts card */}
-                <Card className="bg-white border border-[#f0f2f5] shadow rounded-xl flex-1">
-                  <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-base font-bold text-[#292d32]">Active Alerts</CardTitle>
-                    <Button variant="ghost" className="text-[#1b59f8] text-xs p-0 h-auto font-semibold">
-                      View All
-                    </Button>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    {alerts.map((alert, index) => (
-                      <div key={index} className="space-y-1">
-                        <div className="flex items-start gap-2">
-                          <Badge
-                            className={`text-xs font-semibold ${
-                              alert.type === "Critical"
-                                ? "bg-[#fee2e2] text-[#dc2626]"
-                                : alert.type === "Warning"
-                                ? "bg-[#ffedd5] text-[#ea580c]"
-                                : "bg-[#e9d5ff] text-[#7e22ce]"
-                            }`}
-                          >
-                            {alert.id}
-                          </Badge>
-                          <Badge
-                            className={`text-xs font-semibold ${
-                              alert.type === "Critical"
-                                ? "bg-[#fee2e2] text-[#dc2626]"
-                                : alert.type === "Warning"
-                                ? "bg-[#ffedd5] text-[#ea580c]"
-                                : "bg-[#e9d5ff] text-[#7e22ce]"
-                            }`}
-                          >
-                            {alert.type}
-                          </Badge>
-                        </div>
-                        <p className="text-xs text-[#292d32] font-medium">{alert.message}</p>
-                        {alert.time && <p className="text-xs text-[#bfc8d6]">{alert.time}</p>}
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
+             <Card className="bg-white border border-[#f0f2f5] shadow rounded-xl flex-1">
+
+<CardHeader className="pb-2">
+  <CardTitle className="ml-4 mt-2 text-base font-bold text-[#292d32]">
+    Weather Info
+  </CardTitle>
+</CardHeader>
+<CardContent className="flex flex-col items-center text-center space-y-3">
+  {weather.loading ? (
+    <div className="text-gray-500 text-sm">Loading...</div>
+  ) : (
+    <>
+      <div className="flex items-center gap-2 justify-center">
+        <img
+          src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
+          alt="Weather Icon"
+          className="w-12 h-12"
+        />
+        <div className="text-3xl font-bold text-[#292d32]">
+          {weather.temp !== null ? `${weather.temp}°C` : "--"}
+        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={fetchWeather}
+          disabled={weather.loading}
+          className="text-[#1b59f8] hover:bg-[#e5e7eb] rounded-full"
+          title="Refresh"
+        >
+          <RefreshCw className={`w-4 h-4 ${weather.loading ? "animate-spin" : ""}`} />
+        </Button>
+      </div>
+<div className="w-full flex">
+  <div className="ml-12 flex flex-col gap-1 text-sm text-[#6b7280] w-full max-w-md">
+    {[
+      { icon: "💨", label: "Wind", value: `${weather.windSpeed} m/s ${degToCompass(weather.windDeg)}` },
+      { icon: "🌡", label: "Pressure", value: `${weather.pressure} hPa` },
+      { icon: "💧", label: "Humidity", value: `${weather.humidity}%` },
+      { icon: "👁", label: "Visibility", value: `${(weather.visibility || 0) / 1000} km` },
+    ].map((item, i) => (
+      <div key={i} className="grid grid-cols-[1.5rem_6rem_1fr] items-start text-left">
+        <span>{item.icon}</span>
+        <span>{item.label}:</span>
+        <span>{item.value}</span>
+      </div>
+    ))}
+  </div>
+</div>
+<div className="relative -top-1.5 text-xs text-gray-400">
+  {weather.city}, {weather.country}
+</div>
+
+    </>
+  )}
+</CardContent>
+</Card>
+
+<Card className="bg-white border border-[#f0f2f5] shadow rounded-xl flex-1">
+  <CardHeader className="flex flex-row items-center justify-between pb-2">
+      <CardTitle className="ml-4 mt-2 text-base font-bold text-[#292d32]">
+    Active Alerts
+  </CardTitle>
+    <Button variant="ghost" className="text-[#1b59f8] text-xs p-4 h-auto font-semibold">
+      View All
+    </Button>
+  </CardHeader>
+
+<CardContent className="px-4 pb-4 space-y-3 mt-[-4px]">
+  {alerts.map((alert, index) => {
+    const alertStyles =
+      alert.type === "Critical"
+        ? "bg-[#fef2f2] border-[#fecaca] text-[#dc2626]"
+        : alert.type === "Warning"
+        ? "bg-[#fff7ed] border-[#fde68a] text-[#ea580c]"
+        : "bg-[#f5f3ff] border-[#d8b4fe] text-[#7e22ce]";
+
+    return (
+      <div
+        key={index}
+        className={`border rounded-md p-2 ${alertStyles} text-sm`}
+      >
+        <div className="flex justify-between font-semibold">
+          <span>{alert.id}</span>
+          <span>{alert.type}</span>
+        </div>
+        <p className="mt-0.5 text-[#292d32]">{alert.message}</p>
+        {alert.time && (
+          <p className="mt-0.5 text-xs text-[#6b7280]">{alert.time}</p>
+        )}
+      </div>
+    );
+  })}
+</CardContent>
+</Card>
+
+
               </div>
             </div>
 
@@ -395,71 +439,108 @@ export default function Dashboard1() {
                       Maintenance Due
                     </Button>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-[#bfc8d6]">Sort by:</span>
-                    <Select defaultValue="newest">
-                      <SelectTrigger className="w-28 text-xs">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="newest">Newest</SelectItem>
-                        <SelectItem value="oldest">Oldest</SelectItem>
-                        <SelectItem value="status">Status</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                 <div className="flex items-center gap-2">
+                <span className="text-xs text-[#868a91]">Sort by:</span>
+                <Select defaultValue="newest" className="text-xs">
+                  <SelectTrigger className="w-28 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="text-xs"> {/* 👈 smaller text */}
+                    <SelectItem value="newest" className="text-xs">Newest</SelectItem>
+                    <SelectItem value="oldest" className="text-xs">Oldest</SelectItem>
+                    <SelectItem value="status" className="text-xs">Status</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
                 </div>
                 {/* Table */}
-                <Table>
-                  <TableHeader>
-                    <TableRow className="border-[#f0f2f5] bg-[#f7f9fb]">
-                      <TableHead className="text-[#292d32] font-bold text-xs">ID</TableHead>
-                      <TableHead className="text-[#bfc8d6] font-semibold text-xs">Location</TableHead>
-                      <TableHead className="text-[#bfc8d6] font-semibold text-xs">Type</TableHead>
-                      <TableHead className="text-[#bfc8d6] font-semibold text-xs">Water Threshold (cm)</TableHead>
-                      <TableHead className="text-[#bfc8d6] font-semibold text-xs">Gas Threshold (ppm)</TableHead>
-                      <TableHead className="text-[#bfc8d6] font-semibold text-xs">Status</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {manholeData.map((item) => (
-                      <TableRow key={item.id} className="border-[#f0f2f5] hover:bg-[#f9fbff]">
-                        <TableCell className="font-bold text-[#292d32] text-xs">{item.id}</TableCell>
-                        <TableCell className="text-[#bfc8d6] text-xs">{item.location}</TableCell>
-                        <TableCell className="text-[#bfc8d6] text-xs">{item.type}</TableCell>
-                        <TableCell className="text-[#bfc8d6] text-xs">{item.waterThreshold}</TableCell>
-                        <TableCell className="text-[#bfc8d6] text-xs">{item.gasThreshold}</TableCell>
-                        <TableCell>
+          <div className="overflow-x-auto">
+            <Table className="w-full table-fixed">
+              <TableHeader>
+                <TableRow className="border-[#f0f2f5] bg-[#f7f9fb]">
+                  <TableHead className="w-1/6 text-center text-[#868a91] font-bold text-xs py-1.5">ID</TableHead>
+                  <TableHead className="w-1/6 text-center text-[#868a91] font-semibold text-xs py-1.5">Location</TableHead>
+                  <TableHead className="w-1/6 text-center text-[#868a91] font-semibold text-xs py-1.5">Type</TableHead>
+                  <TableHead className="w-1/6 text-center text-[#868a91] font-semibold text-xs py-1.5">Water Threshold (cm)</TableHead>
+                  <TableHead className="w-1/6 text-center text-[#868a91] font-semibold text-xs py-1.5">Gas Threshold (ppm)</TableHead>
+                  <TableHead className="w-1/6 text-center text-[#868a91] font-semibold text-xs py-1.5">Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {manholeData.map((item) => (
+                  <TableRow key={item.id} className="border-[#f0f2f5] hover:bg-[#f9fbff]">
+                    <TableCell className="w-1/6 text-center font-bold text-[#292d32] text-xs py-1.5">{item.id}</TableCell>
+                      <TableCell className="w-1/6 text-center text-[#292d32] text-xs py-1.5">{item.location}</TableCell>
+                      <TableCell className="w-1/6 text-center text-[#292d32] text-xs py-1.5">{item.type}</TableCell>
+                      <TableCell className="w-1/6 text-center text-[#292d32] text-xs py-1.5">{item.waterThreshold}</TableCell>
+                      <TableCell className="w-1/6 text-center text-[#292d32] text-xs py-1.5">{item.gasThreshold}</TableCell>
+                      <TableCell className="w-1/6 text-center py-3">
+                        <div className="inline-block px-2 py-1">
                           <Badge
-                            className={`rounded-full px-3 py-1 text-xs font-bold ${item.status === "Critical"
-                              ? "bg-[#fee2e2] text-[#dc2626] hover:bg-[#fee2e2]"
-                              : "bg-[#dcfce7] text-[#16a34a] hover:bg-[#dcfce7]"}`}
+                            className={`rounded-full px-3 py-1 text-xs font-bold ${
+                              item.status === "Critical"
+                                ? "bg-[#fee2e2] text-[#dc2626] hover:bg-[#fee2e2]"
+                                : "bg-[#dcfce7] text-[#16a34a] hover:bg-[#dcfce7]"
+                            }`}
                           >
                             {item.status}
                           </Badge>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-                {/* Pagination */}
-                <div className="flex items-center justify-between p-4 border-t border-[#f0f2f5]">
-                  <p className="text-xs text-[#bfc8d6]">Showing data 1 to 8 of 256k entries</p>
-                  <div className="flex items-center gap-1">
-                    <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent rounded-full text-xs">
-                      <ChevronLeft className="w-4 h-4" />
-                    </Button>
-                    <Button variant="default" size="sm" className="bg-[#1b59f8] text-white rounded-full font-bold text-xs">1</Button>
-                    <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent rounded-full font-bold text-xs">2</Button>
-                    <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent rounded-full font-bold text-xs">3</Button>
-                    <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent rounded-full font-bold text-xs">4</Button>
-                    <span className="text-[#bfc8d6] text-xs">...</span>
-                    <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent rounded-full font-bold text-xs">40</Button>
-                    <Button variant="outline" size="sm" className="border-[#e7e7e7] bg-transparent rounded-full text-xs">
-                      <ChevronRight className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
+                        </div>
+                      </TableCell>
+
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+
+            {/* Pagination */}
+            <div className="flex items-center justify-between p-4 border-t border-[#f0f2f5]">
+              <p className="text-xs text-[#bfc8d6]">Showing data 1 to 8 of 256k entries</p>
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-[#e7e7e7] bg-transparent rounded-full text-xs px-3 py-2 h-9"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="bg-[#1b59f8] text-white rounded-full font-bold text-xs px-4 py-2 h-9"
+                >
+                  1
+                </Button>
+                {[2, 3, 4].map((page) => (
+                  <Button
+                    key={page}
+                    variant="outline"
+                    size="sm"
+                    className="border-[#e7e7e7] bg-transparent rounded-full font-bold text-xs px-4 py-2 h-9"
+                  >
+                    {page}
+                  </Button>
+                ))}
+                <span className="text-[#bfc8d6] text-xs px-2">...</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-[#e7e7e7] bg-transparent rounded-full font-bold text-xs px-4 py-2 h-9"
+                >
+                  40
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-[#e7e7e7] bg-transparent rounded-full text-xs px-3 py-2 h-9"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+
               </CardContent>
             </Card>
           </div>
@@ -467,4 +548,12 @@ export default function Dashboard1() {
       </main>
     </div>
   )
+  function degToCompass(deg: number | null): string {
+  if (deg === null) return ""
+  const directions = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
+                      "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
+  const index = Math.floor((deg / 22.5) + 0.5) % 16
+  return directions[index]
+}
+
 }
