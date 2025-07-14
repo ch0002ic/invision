@@ -10,6 +10,9 @@ export type CardHeaderProps = React.HTMLAttributes<HTMLDivElement>;
 export const CardHeader: React.FC<CardHeaderProps> = (props) => <div {...props} />;
 
 export type CardTitleProps = React.HTMLAttributes<HTMLHeadingElement>;
-export const CardTitle: React.FC<CardTitleProps> = (props) => <h2 {...props} />;
+export const CardTitle: React.FC<CardTitleProps> = (props) => (
+	// eslint-disable-next-line jsx-a11y/heading-has-content
+	<h2 {...props} />
+);
 
 export default Card;

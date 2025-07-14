@@ -4,7 +4,6 @@ import Dashboard1 from "./dashboard1";
 import Dashboard2 from "./dashboard2";
 import Dashboard3 from "./dashboard3";
 import Dashboard4 from "./dashboard4";
-import Dashboard5 from "./dashboard5";
 
 export default function App() {
   return (
@@ -15,7 +14,6 @@ export default function App() {
         <Route path="/dashboard2" element={<Dashboard2 />} />
         <Route path="/dashboard3" element={<Dashboard3 />} />
         <Route path="/dashboard4" element={<Dashboard4 />} />
-        <Route path="/dashboard5" element={<Dashboard5 />} />
       </Routes>
     </BrowserRouter>
   );
