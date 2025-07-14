@@ -17,6 +17,10 @@ import {
 import Layout from "./components/Layout"
 import { useNavigate } from "react-router-dom"
 
+// ✅ Importing images
+import EholeImage from "./assets/ehole.png"
+import ImageCapture from "./assets/Image Capture.png"
+
 export default function Dashboard3() {
   const navigate = useNavigate()
   const [waterJetInlet, setWaterJetInlet] = useState(true)
@@ -24,6 +28,10 @@ export default function Dashboard3() {
   const [blower, setBlower] = useState(true)
   const [tiltAngle, setTiltAngle] = useState([90])
   const [panAngle, setPanAngle] = useState([90])
+  const [cameraQuality, setCameraQuality] = useState("Medium")
+
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+
 
   const handleScan = () => {
     alert(`Scanning at Tilt: ${tiltAngle[0]}°, Pan: ${panAngle[0]}°`)
@@ -38,55 +46,55 @@ export default function Dashboard3() {
   }
 
   const handleBackToMonitoring = () => {
-    // Navigate back to monitoring dashboard
     navigate("/dashboard2")
   }
 
   return (
     <Layout>
-      {/* Main Card */}
       <div className="bg-white rounded-2xl shadow-lg border border-[#f0f2f5] px-10 py-8">
-        {/* Title and Navigation */}
+        {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-6">
-            {/* Back Button */}
-            <Button 
+            <Button
               onClick={handleBackToMonitoring}
-              variant="ghost" 
-              className="p-2 hover:bg-[#f8f8fb]"
+              variant="ghost"
+              className="p-2 hover:bg-[#f8f8fb] self-start"
             >
               <ArrowLeft className="w-5 h-5" />
             </Button>
+
             <div className="flex items-center gap-8">
               <div className="w-32 h-32 bg-[#f8f8fb] rounded-full flex items-center justify-center overflow-hidden border border-[#e5e7eb]">
                 <img
-                  src="/placeholder.svg?height=200&width=200"
-                  alt="Manhole monitoring device"
-                  width={200}
-                  height={200}
-                  className="object-contain w-28 h-28"
+                  src={EholeImage}
+                  alt="Device"
+                  className="w-65 h-65 object-contain"
                 />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-[#292d32] mb-4">Control Panel - E-Hole 237001</h1>
-                <div className="grid grid-cols-3 gap-8">
+                <h1 className="text-2xl font-bold text-[#292d32] mb-4">
+                  Control Panel - E-Hole 237001
+                </h1>
+
+                <div className="flex gap-16 items-start">
                   <div>
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-2 mb-1">
                       <Battery className="w-4 h-4 text-[#00b087]" />
                       <span className="text-sm text-[#9798a1]">Battery</span>
                     </div>
-                    <div className="font-bold text-[#292d32] text-lg">11.24V</div>
+                    <div className="text-lg font-bold text-black">11.24V</div>
                   </div>
+
                   <div>
-                    <div className="text-sm text-[#9798a1] mb-2">Status</div>
-                    <Badge className="bg-[#dcfce7] text-[#16a34a] hover:bg-[#dcfce7] font-semibold">Active</Badge>
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <MapPin className="w-4 h-4 text-[#9798a1]" />
-                      <span className="text-sm text-[#9798a1]">Location</span>
+                    <div className="text-sm text-[#9798a1] mb-1">Status</div>
+                    <div className="bg-[#dcfce7] text-[#16a34a] font-semibold text-sm px-4 py-1 rounded-full inline-block">
+                      Active
                     </div>
-                    <div className="text-sm font-semibold text-[#292d32] leading-tight">
+                  </div>
+
+                  <div>
+                    <div className="text-sm text-[#9798a1] mb-1">Location</div>
+                    <div className="text-sm font-bold text-black leading-tight">
                       Faculty of Engineering<br />Universiti Malaya
                     </div>
                   </div>
@@ -94,140 +102,151 @@ export default function Dashboard3() {
               </div>
             </div>
           </div>
-          <Button 
+
+          <Button
             onClick={handleReport}
-            className="bg-[#dc2626] hover:bg-[#b91c1c] text-white font-bold px-8 py-3 rounded-lg text-base shadow-md"
+            className="bg-[#dc2626] hover:bg-[#b91c1c] text-white font-bold px-4 py-2 rounded-lg text-sm shadow-md flex items-center"
           >
-            <AlertTriangle className="w-5 h-5 mr-2" />
+            <AlertTriangle className="w-4 h-4 mr-2" />
             Report
           </Button>
         </div>
 
-        {/* Controls Row */}
-        <div className="flex flex-wrap gap-8 mb-8">
-          {/* Switches */}
-          <div className="flex gap-8">
-            <div className="flex flex-col items-center">
-              <span className="text-sm text-[#9798a1] mb-2">Water Jet (Inlet)</span>
-              <Switch
-                checked={waterJetInlet}
-                onCheckedChange={setWaterJetInlet}
-                className="data-[state=checked]:bg-[#00b087]"
-              />
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-sm text-[#9798a1] mb-2">Water Jet (Outlet)</span>
-              <Switch
-                checked={waterJetOutlet}
-                onCheckedChange={setWaterJetOutlet}
-                className="data-[state=checked]:bg-[#00b087]"
-              />
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-sm text-[#9798a1] mb-2">Blower</span>
-              <Switch
-                checked={blower}
-                onCheckedChange={setBlower}
-                className="data-[state=checked]:bg-[#00b087]"
-              />
-            </div>
+        {/* Controls */}
+        <div className="flex flex-wrap gap-12 mb-8">
+          <div className="flex gap-12">
+            {[{
+              label: "Water Jet (Inlet)", checked: waterJetInlet, set: setWaterJetInlet
+            }, {
+              label: "Water Jet (Outlet)", checked: waterJetOutlet, set: setWaterJetOutlet
+            }, {
+              label: "Blower", checked: blower, set: setBlower
+            }].map(({ label, checked, set }) => (
+              <div className="flex flex-col items-center" key={label}>
+                <span className="text-sm text-[#9798a1] mb-2">{label}</span>
+                <Switch
+                  checked={checked}
+                  onCheckedChange={set}
+                  className="data-[state=checked]:bg-[#00b087]"
+                />
+              </div>
+            ))}
           </div>
 
-          {/* Sliders */}
           <div className="flex gap-8">
             <div className="w-32">
               <span className="text-sm text-[#9798a1] mb-2 block">Tilt Angle</span>
-              <Slider
-                value={tiltAngle}
-                onValueChange={setTiltAngle}
-                max={180}
-                step={1}
-                className="w-full"
-              />
+              <Slider value={tiltAngle} onValueChange={setTiltAngle} max={180} step={1} />
               <span className="text-xs text-[#9798a1] mt-1 block">{tiltAngle[0]}°</span>
             </div>
             <div className="w-32">
               <span className="text-sm text-[#9798a1] mb-2 block">Pan Angle</span>
-              <Slider
-                value={panAngle}
-                onValueChange={setPanAngle}
-                max={180}
-                step={1}
-                className="w-full"
-              />
+              <Slider value={panAngle} onValueChange={setPanAngle} max={180} step={1} />
               <span className="text-xs text-[#9798a1] mt-1 block">{panAngle[0]}°</span>
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex gap-4">
-            <Button 
-              onClick={handleScan}
-              variant="outline" 
-              className="px-6 py-2 border-[#e5e7eb] text-[#292d32] hover:bg-[#f8f8fb]"
-            >
-              <Scan className="w-4 h-4 mr-2" />
-              Scan
-            </Button>
-            <Button 
+          <div className="flex gap-4 items-center">
+            <Button
+            onClick={handleScan}
+            className="bg-[#f6be30] hover:bg-[#f59e0b] text-white font-bold px-4 py-2 rounded-lg text-sm shadow-md flex items-center justify-start w-22"
+          >
+            <Scan className="w-10 h-4 mr-2" />
+            Scan
+          </Button>
+
+            <Button
               onClick={handleCapture}
-              className="bg-[#1b59f8] hover:bg-[#1548d4] text-white px-6 py-2"
+              className="bg-[#1b59f8] hover:bg-[#1548d4] text-white font-bold px-4 py-2 rounded-lg text-sm shadow-md flex items-center justify-start w-22"
             >
-              <Camera className="w-4 h-4 mr-2" />
+              <Camera className="w-8 h-4 mr-2" />
               Capture
             </Button>
+
           </div>
         </div>
 
-        {/* Camera Feed and History */}
-        <div className="grid grid-cols-2 gap-8">
-          {/* Camera Feed */}
-          <Card>
-            <CardContent className="p-6">
-              <h3 className="text-lg font-bold text-[#292d32] mb-4">Camera Feed</h3>
-              <div className="aspect-video bg-[#f8f8fb] rounded-lg border border-[#e5e7eb] flex items-center justify-center">
-                <div className="text-center text-[#9798a1]">
-                  <Camera className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                  <p>Live Camera Feed</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* History Table */}
-          <Card>
-            <CardContent className="p-6">
-              <h3 className="text-lg font-bold text-[#292d32] mb-4">History</h3>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-[#e5e7eb]">
-                      <th className="text-left py-3 text-sm text-[#bfc8d6] font-semibold">Timestamp</th>
-                      <th className="text-left py-3 text-sm text-[#bfc8d6] font-semibold">Angle (Pan, Tilt)</th>
-                      <th className="text-left py-3 text-sm text-[#bfc8d6] font-semibold">Image</th>
-                      <th className="text-left py-3 text-sm text-[#bfc8d6] font-semibold">Remark</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="py-4 text-sm text-[#292d32]">
-                        2025-06-30
-                        <br />
-                        14:52:30.98600
-                        <br />
-                        0+00:00
-                      </td>
-                      <td className="py-4 text-sm text-[#292d32]">90, 95</td>
-                      <td className="py-4 text-sm text-[#292d32]">-</td>
-                      <td className="py-4 text-sm text-[#292d32]">Normal Condition</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
+{/* Camera + History */}
+<div className="grid grid-cols-[1fr_2fr] gap-8">
+  {/* Live Camera */}
+  <Card className="w-full">
+    <CardContent className="p-4">
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="text-base font-bold text-[#292d32]">Live Camera</h3>
+        <select
+          value={cameraQuality}
+          onChange={(e) => setCameraQuality(e.target.value)}
+          className="border border-[#e5e7eb] rounded-md text-sm px-2 py-1"
+        >
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+      </div>
+      <div className="aspect-[4/3] bg-[#f8f8fb] rounded-lg border border-[#e5e7eb] flex items-center justify-center">
+        <div className="text-center text-[#9798a1]">
+          <Camera className="w-10 h-10 mx-auto mb-1 opacity-50" />
+          <p>Live Camera Feed</p>
         </div>
-      </div> {/* End Main Card */}
+      </div>
+    </CardContent>
+  </Card>
+
+{/* History Table */}
+<Card className="w-full self-stretch -ml-2"> {/* Moves left & stretches vertically */}
+  <CardContent className="p-6">
+    <h3 className="text-lg font-bold text-[#292d32] mb-4">History</h3>
+    <div className="overflow-x-auto">
+      <table className="w-full">
+        <thead>
+          <tr className="border-b border-[#e5e7eb]">
+            <th className="text-left py-3 text-sm text-[#bfc8d6] font-semibold">Timestamp</th>
+            <th className="text-left py-3 text-sm text-[#bfc8d6] font-semibold">Angle (Pan, Tilt)</th>
+            <th className="text-left py-3 text-sm text-[#bfc8d6] font-semibold w-48">Image</th>
+            <th className="text-left py-3 text-sm text-[#bfc8d6] font-semibold">Remark</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td className="py-4 text-sm text-[#292d32]">
+              2025-06-30<br />14:52:30.98600<br />0+00:00
+            </td>
+            <td className="py-4 text-sm text-[#292d32]">90, 95</td>
+            <td className="py-4 w-48">
+             <img
+              src={ImageCapture}
+              alt="Captured"
+              className="w-36 max-h-40 object-contain rounded border border-[#e5e7eb] cursor-pointer hover:scale-105 transition-transform duration-200"
+              onClick={() => setSelectedImage(ImageCapture)}
+            />
+            </td>
+            <td className="py-4 text-sm text-[#292d32]">Normal Condition</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </CardContent>
+</Card>
+{selectedImage && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+
+      <button
+        onClick={() => setSelectedImage(null)}
+        className="absolute top-5 right-20 bg-[#ffc5c5] hover:bg-[#df0404] text-[#df0404] hover:text-white px-3 py-1 rounded-full transition-colors"
+      >
+        ✕
+      </button>
+      <img
+        src={selectedImage}
+        alt="Zoomed"
+        className="w-full max-h-[80vh] object-contain rounded"
+      />
+  
+  </div>
+)}
+
+</div>
+      </div>
     </Layout>
   )
 }
