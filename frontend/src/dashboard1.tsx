@@ -217,89 +217,103 @@ const fetchWeather = async () => {
         </Card>
       </div>
 
-      {/* Weather & Map Container */}
+      {/* Map and Weather Container */}
       <div className="flex gap-7 mb-7">
-        <Card className="bg-white border border-[#f0f2f5] shadow rounded-xl flex-none" style={{ width: "320px" }}>
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center justify-between text-base font-bold text-[#292d32]">
-              Weather
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={fetchWeather}
-                disabled={weather.loading}
-                className="text-[#1b59f8] hover:bg-[#e5e7eb] rounded-full"
-                title="Refresh"
-              >
-                <RefreshCw className={`w-4 h-4 ${weather.loading ? "animate-spin" : ""}`} />
-              </Button>
-            </CardTitle>
+        {/* Map Section */}
+        <Card className="flex-[2.5] bg-white border border-[#f0f2f5] shadow rounded-xl flex flex-col justify-between min-h-[340px]">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base font-bold text-[#292d32]">Penang Overview Map</CardTitle>
           </CardHeader>
-          <CardContent>
-            {weather.loading ? (
-              <div className="flex items-center justify-center py-8">
-                <RefreshCw className="w-5 h-5 animate-spin text-[#1b59f8]" />
+          <CardContent className="flex-1 flex flex-col">
+            <div className="relative flex-1 rounded-lg overflow-hidden mb-2">
+              <iframe
+                title="Penang Map"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=100.3198%2C5.4041%2C100.3378%2C5.4241&layer=mapnik&marker=5.4141%2C100.3288"
+                className="absolute inset-0 w-full h-full border-0 z-0"
+                allowFullScreen
+              ></iframe>
+            </div>
+            {/* Legend */}
+            <div className="flex items-center justify-center gap-7 mt-2 text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-[#16a34a] rounded-full"></div>
+                <span className="text-[#bfc8d6]">Normal (0-25%)</span>
               </div>
-            ) : (
-              <>
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <p className="text-3xl font-bold text-[#292d32]">{weather.temp}°C</p>
-                    <p className="text-sm text-[#6b7280] capitalize">
-                      {weather.desc} · Feels like {weather.feelsLike}°C
-                    </p>
-                  </div>
-                  {weather.icon && (
-                    <img
-                      src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
-                      alt={weather.desc}
-                      className="w-12 h-12"
-                    />
-                  )}
-                </div>
-                
-                <div className="w-full flex">
-                  <div className="ml-12 flex flex-col gap-1 text-sm text-[#6b7280] w-full max-w-md">
-                    {[
-                      { icon: "💨", label: "Wind", value: `${weather.windSpeed} m/s ${degToCompass(weather.windDeg)}` },
-                      { icon: "🌡", label: "Pressure", value: `${weather.pressure} hPa` },
-                      { icon: "💧", label: "Humidity", value: `${weather.humidity}%` },
-                      { icon: "👁", label: "Visibility", value: `${(weather.visibility || 0) / 1000} km` },
-                    ].map((item, i) => (
-                      <div key={i} className="grid grid-cols-[1.5rem_6rem_1fr] items-start text-left">
-                        <span>{item.icon}</span>
-                        <span>{item.label}:</span>
-                        <span>{item.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="relative -top-1.5 text-xs text-gray-400">
-                  {weather.city}, {weather.country}
-                </div>
-              </>
-            )}
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-[#ea580c] rounded-full"></div>
+                <span className="text-[#bfc8d6]">Warning (26-60%)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-[#dc2626] rounded-full"></div>
+                <span className="text-[#bfc8d6]">Critical (61-100%)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-[#7e22ce] rounded-full"></div>
+                <span className="text-[#bfc8d6]">Maintenance</span>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
-        <div className="flex-1 flex flex-col gap-7">
+        {/* Right Panel */}
+        <div className="flex-1 flex flex-col gap-7 min-w-[320px]">
+          {/* Weather Card */}
           <Card className="bg-white border border-[#f0f2f5] shadow rounded-xl flex-1">
-            <CardHeader className="pb-4">
-              <CardTitle className="text-base font-bold text-[#292d32]">Real-time Map</CardTitle>
+            <CardHeader className="pb-2">
+              <CardTitle className="ml-4 mt-2 text-base font-bold text-[#292d32]">
+                Weather Info
+              </CardTitle>
             </CardHeader>
-            <CardContent className="h-40">
-              <div className="w-full h-full rounded-lg overflow-hidden">
-                <iframe
-                  src="https://www.openstreetmap.org/export/embed.html?bbox=100.32%2C5.40%2C100.35%2C5.43&layer=mapnik"
-                  width="100%"
-                  height="100%"
-                  className="border-0"
-                  title="Penang Map"
-                />
-              </div>
+            <CardContent className="flex flex-col items-center text-center space-y-3">
+              {weather.loading ? (
+                <div className="text-gray-500 text-sm">Loading...</div>
+              ) : (
+                <>
+                  <div className="flex items-center gap-2 justify-center">
+                    <img
+                      src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
+                      alt="Weather Icon"
+                      className="w-12 h-12"
+                    />
+                    <div className="text-3xl font-bold text-[#292d32]">
+                      {weather.temp !== null ? `${weather.temp}°C` : "--"}
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={fetchWeather}
+                      disabled={weather.loading}
+                      className="text-[#1b59f8] hover:bg-[#e5e7eb] rounded-full"
+                      title="Refresh"
+                    >
+                      <RefreshCw className={`w-4 h-4 ${weather.loading ? "animate-spin" : ""}`} />
+                    </Button>
+                  </div>
+                  <div className="w-full flex">
+                    <div className="ml-12 flex flex-col gap-1 text-sm text-[#6b7280] w-full max-w-md">
+                      {[
+                        { icon: "💨", label: "Wind", value: `${weather.windSpeed} m/s ${degToCompass(weather.windDeg)}` },
+                        { icon: "🌡", label: "Pressure", value: `${weather.pressure} hPa` },
+                        { icon: "💧", label: "Humidity", value: `${weather.humidity}%` },
+                        { icon: "👁", label: "Visibility", value: `${(weather.visibility || 0) / 1000} km` },
+                      ].map((item, i) => (
+                        <div key={i} className="grid grid-cols-[1.5rem_6rem_1fr] items-start text-left">
+                          <span>{item.icon}</span>
+                          <span>{item.label}:</span>
+                          <span>{item.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="relative -top-1.5 text-xs text-gray-400">
+                    {weather.city}, {weather.country}
+                  </div>
+                </>
+              )}
             </CardContent>
           </Card>
 
+          {/* Active Alerts Card */}
           <Card className="bg-white border border-[#f0f2f5] shadow rounded-xl flex-1">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="ml-4 mt-2 text-base font-bold text-[#292d32]">
@@ -318,7 +332,6 @@ const fetchWeather = async () => {
                 View All
               </Button>
             </CardHeader>
-
             <CardContent className="px-4 pb-4 space-y-3 mt-[-4px]">
               {alerts.map((alert, index) => {
                 const alertStyles =
@@ -350,7 +363,7 @@ const fetchWeather = async () => {
       </div>
 
       {/* Data Table */}
-      <Card className="bg-white border border-[#f0f2f5] shadow rounded-xl">
+      <Card className="bg-white border border-[#f0f2f5] shadow rounded-xl mt-0">
         <CardContent className="p-0">
           {/* Table Filters */}
           <div className="flex items-center justify-between p-4 border-b border-[#f0f2f5]">

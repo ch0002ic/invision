@@ -1,6 +1,6 @@
 "use client"
 
-import { Battery, Edit } from "lucide-react"
+import { Battery, Edit, Settings } from "lucide-react"
 import { Button } from "./components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card"
 import { Badge } from "./components/ui/badge"
@@ -10,6 +10,13 @@ export default function Dashboard2() {
 
   const handleEdit = () => {
     alert("Edit Settings:\n• Water level thresholds\n• Gas detection limits\n• Alert notifications\n• Maintenance schedule\n• Device configuration")
+  }
+
+  const handleControlPanel = () => {
+    // Navigate to control panel for this specific e-hole
+    alert("Opening Control Panel for E-Hole 237001:\n• Device controls\n• Real-time monitoring\n• System diagnostics\n• Remote operations\n• Sensor calibration")
+    // In a real app, this would navigate to the control panel page with the e-hole ID
+    // navigate(`/control-panel/237001`)
   }
 
   // Gauge component for circular meters
@@ -112,7 +119,7 @@ export default function Dashboard2() {
                   <Edit className="w-4 h-4" />
                 </Button>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 mb-3">
                 <div className="flex items-center gap-2">
                   <div className="flex gap-1">
                     {[1, 2, 3, 4].map((i) => (
@@ -124,6 +131,14 @@ export default function Dashboard2() {
                 </div>
                 <Badge className="bg-[#dcfce7] text-[#16a34a] hover:bg-[#dcfce7]">ACTIVE</Badge>
               </div>
+              {/* Control Panel Button */}
+              <Button 
+                onClick={handleControlPanel}
+                className="bg-[#1b59f8] hover:bg-[#1548d4] text-white px-6 py-2 rounded-lg font-semibold shadow-md flex items-center gap-2"
+              >
+                <Settings className="w-4 h-4" />
+                Control Panel
+              </Button>
             </div>
           </div>
           <div className="text-right">
