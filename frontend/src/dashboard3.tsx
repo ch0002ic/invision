@@ -12,6 +12,7 @@ import {
   AlertTriangle,
   Scan,
   Camera,
+  ArrowLeft,
 } from "lucide-react"
 import Layout from "./components/Layout"
 
@@ -34,41 +35,60 @@ export default function Dashboard3() {
     alert("Creating maintenance report...")
   }
 
+  const handleBackToMonitoring = () => {
+    // Navigate back to monitoring dashboard
+    alert("Returning to E-Hole monitoring dashboard...")
+    // In a real app: navigate('/dashboard2') or history.back()
+  }
+
   return (
     <Layout>
       {/* Main Card */}
       <div className="bg-white rounded-2xl shadow-lg border border-[#f0f2f5] px-10 py-8">
-        {/* Title and Report Button */}
+        {/* Title and Navigation */}
         <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-8">
-            <div className="w-32 h-32 bg-[#f8f8fb] rounded-full flex items-center justify-center overflow-hidden border border-[#e5e7eb]">
-              <img
-                src="/placeholder.svg?height=200&width=200"
-                alt="Manhole monitoring device"
-                width={200}
-                height={200}
-                className="object-contain w-28 h-28"
-              />
-            </div>
-            <div className="grid grid-cols-3 gap-8">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <Battery className="w-4 h-4 text-[#00b087]" />
-                  <span className="text-sm text-[#9798a1]">Battery</span>
-                </div>
-                <div className="font-bold text-[#292d32] text-lg">11.24V</div>
+          <div className="flex items-center gap-6">
+            {/* Back Button */}
+            <Button 
+              onClick={handleBackToMonitoring}
+              variant="ghost" 
+              className="p-2 hover:bg-[#f8f8fb]"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+            <div className="flex items-center gap-8">
+              <div className="w-32 h-32 bg-[#f8f8fb] rounded-full flex items-center justify-center overflow-hidden border border-[#e5e7eb]">
+                <img
+                  src="/placeholder.svg?height=200&width=200"
+                  alt="Manhole monitoring device"
+                  width={200}
+                  height={200}
+                  className="object-contain w-28 h-28"
+                />
               </div>
               <div>
-                <div className="text-sm text-[#9798a1] mb-2">Status</div>
-                <Badge className="bg-[#dcfce7] text-[#16a34a] hover:bg-[#dcfce7] font-semibold">Active</Badge>
-              </div>
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <MapPin className="w-4 h-4 text-[#9798a1]" />
-                  <span className="text-sm text-[#9798a1]">Location</span>
-                </div>
-                <div className="text-sm font-semibold text-[#292d32] leading-tight">
-                  Faculty of Engineering<br />Universiti Malaya
+                <h1 className="text-2xl font-bold text-[#292d32] mb-4">Control Panel - E-Hole 237001</h1>
+                <div className="grid grid-cols-3 gap-8">
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Battery className="w-4 h-4 text-[#00b087]" />
+                      <span className="text-sm text-[#9798a1]">Battery</span>
+                    </div>
+                    <div className="font-bold text-[#292d32] text-lg">11.24V</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-[#9798a1] mb-2">Status</div>
+                    <Badge className="bg-[#dcfce7] text-[#16a34a] hover:bg-[#dcfce7] font-semibold">Active</Badge>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <MapPin className="w-4 h-4 text-[#9798a1]" />
+                      <span className="text-sm text-[#9798a1]">Location</span>
+                    </div>
+                    <div className="text-sm font-semibold text-[#292d32] leading-tight">
+                      Faculty of Engineering<br />Universiti Malaya
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

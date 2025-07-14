@@ -14,9 +14,9 @@ export default function Dashboard2() {
 
   const handleControlPanel = () => {
     // Navigate to control panel for this specific e-hole
-    alert("Opening Control Panel for E-Hole 237001:\n• Device controls\n• Real-time monitoring\n• System diagnostics\n• Remote operations\n• Sensor calibration")
-    // In a real app, this would navigate to the control panel page with the e-hole ID
-    // navigate(`/control-panel/237001`)
+    alert("Opening Control Panel for E-Hole 237001...\n\nThis would navigate to Dashboard3 (Control Panel) where you can:\n• Control water jets and blower\n• Adjust camera angles\n• Capture images and scan\n• View camera feed and history")
+    // In a real app, this would navigate to dashboard3 or control panel page
+    // navigate(`/dashboard3`) or navigate(`/control-panel/237001`)
   }
 
   // Gauge component for circular meters
