@@ -15,8 +15,10 @@ import {
   ArrowLeft,
 } from "lucide-react"
 import Layout from "./components/Layout"
+import { useNavigate } from "react-router-dom"
 
 export default function Dashboard3() {
+  const navigate = useNavigate()
   const [waterJetInlet, setWaterJetInlet] = useState(true)
   const [waterJetOutlet, setWaterJetOutlet] = useState(true)
   const [blower, setBlower] = useState(true)
@@ -37,8 +39,7 @@ export default function Dashboard3() {
 
   const handleBackToMonitoring = () => {
     // Navigate back to monitoring dashboard
-    alert("Returning to E-Hole monitoring dashboard...")
-    // In a real app: navigate('/dashboard2') or history.back()
+    navigate("/dashboard2")
   }
 
   return (

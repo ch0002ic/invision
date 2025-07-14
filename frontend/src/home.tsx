@@ -6,9 +6,9 @@ import axios from "axios"
 import Layout from "./components/Layout"
 
 const dashboards = [
-	{ name: "Dashboard 1", path: "/dashboard1" },
-	{ name: "Dashboard 2", path: "/dashboard2" },
-	{ name: "Dashboard 4", path: "/dashboard4" },
+	{ name: "Dashboard 1", path: "/dashboard1", description: "Main overview with metrics and alerts" },
+	{ name: "Dashboard 2", path: "/dashboard2", description: "E-Hole monitoring and data" },
+	{ name: "Dashboard 4", path: "/dashboard4", description: "Reports and case management" },
 ]
 
 export default function Home() {
@@ -67,16 +67,25 @@ export default function Home() {
 						</p>
 						
 						{/* Quick Dashboard Navigation */}
-						<div className="grid grid-cols-2 gap-4 mb-8">
+						<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
 							{dashboards.map((item) => (
-								<Button
-									key={item.name}
-									onClick={() => navigate(item.path)}
-									className="bg-[#1b59f8] hover:bg-[#1548d4] text-white px-6 py-3 rounded-lg font-semibold"
-								>
-									{item.name}
-								</Button>
+								<div key={item.name} className="text-center">
+									<Button
+										onClick={() => navigate(item.path)}
+										className="bg-[#1b59f8] hover:bg-[#1548d4] text-white px-6 py-3 rounded-lg font-semibold w-full mb-2"
+									>
+										{item.name}
+									</Button>
+									<p className="text-xs text-[#6b7280]">{item.description}</p>
+								</div>
 							))}
+						</div>
+						
+						{/* Control Panel Note */}
+						<div className="bg-[#f0f7ff] border border-[#bfdbfe] rounded-lg p-4 mb-6">
+							<p className="text-sm text-[#1e40af]">
+								💡 <strong>Control Panel:</strong> Access device controls from Dashboard 2 → Control Panel button
+							</p>
 						</div>
 					</div>
 					

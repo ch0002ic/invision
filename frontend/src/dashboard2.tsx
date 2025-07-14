@@ -5,8 +5,10 @@ import { Button } from "./components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card"
 import { Badge } from "./components/ui/badge"
 import Layout from "./components/Layout"
+import { useNavigate } from "react-router-dom"
 
 export default function Dashboard2() {
+  const navigate = useNavigate()
 
   const handleEdit = () => {
     alert("Edit Settings:\n• Water level thresholds\n• Gas detection limits\n• Alert notifications\n• Maintenance schedule\n• Device configuration")
@@ -14,9 +16,7 @@ export default function Dashboard2() {
 
   const handleControlPanel = () => {
     // Navigate to control panel for this specific e-hole
-    alert("Opening Control Panel for E-Hole 237001...\n\nThis would navigate to Dashboard3 (Control Panel) where you can:\n• Control water jets and blower\n• Adjust camera angles\n• Capture images and scan\n• View camera feed and history")
-    // In a real app, this would navigate to dashboard3 or control panel page
-    // navigate(`/dashboard3`) or navigate(`/control-panel/237001`)
+    navigate("/dashboard3")
   }
 
   // Gauge component for circular meters
