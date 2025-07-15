@@ -42,14 +42,15 @@ export default function Dashboard2() {
   }) => {
     const percentage = Math.min(Math.max(((current - min) / (max - min)) * 100, 0), 100)
     
-    // Calculate needle angle: 0% = 180° (left), 100% = 0° (right)
-    const needleAngleDeg = 180 - (percentage / 100) * 180
-    const needleAngleRad = (needleAngleDeg * Math.PI) / 180
+    // Fixed calculation for perfect needle and arc alignment
+    // Semicircle: 180° (left) to 0° (right)
+    const angle = Math.PI - (percentage / 100) * Math.PI // π to 0 radians
     
-    // Arc calculation - SVG path from left to right
+    // Arc progress calculation
     const radius = 40
-    const totalArcLength = Math.PI * radius // Total semicircle length
-    const progressArcLength = (percentage / 100) * totalArcLength
+    const circumference = Math.PI * radius
+    const strokeDasharray = circumference
+    const strokeDashoffset = circumference * (1 - percentage / 100)
     
     return (
       <Card className="p-4 bg-white border border-[#e5e7eb] shadow-sm">
@@ -67,25 +68,25 @@ export default function Dashboard2() {
                 fill="none"
                 strokeLinecap="round"
               />
-              {/* Progress arc - perfectly aligned with needle position */}
+              {/* Progress arc - perfectly synchronized with needle */}
               <path
                 d="M 10 50 A 40 40 0 0 1 110 50"
                 stroke={color}
                 strokeWidth="8"
                 fill="none"
                 strokeLinecap="round"
-                strokeDasharray={totalArcLength}
-                strokeDashoffset={totalArcLength - progressArcLength}
+                strokeDasharray={strokeDasharray}
+                strokeDashoffset={strokeDashoffset}
                 className="transition-all duration-500"
               />
               {/* Center dot */}
               <circle cx="60" cy="50" r="3" fill="#292d32" />
-              {/* Needle - aligned exactly with progress arc endpoint */}
+              {/* Needle - perfectly aligned with progress arc */}
               <line
                 x1="60"
                 y1="50"
-                x2={60 + 30 * Math.cos(needleAngleRad)}
-                y2={50 - 30 * Math.sin(needleAngleRad)}
+                x2={60 + 30 * Math.cos(angle)}
+                y2={50 - 30 * Math.sin(angle)}
                 stroke="#292d32"
                 strokeWidth="2"
                 strokeLinecap="round"
@@ -136,23 +137,28 @@ export default function Dashboard2() {
               </Button>
             </div>
             <div className="flex items-center gap-4 mb-3">
-              <div className="flex items-center gap-2">
-                <div className="flex gap-1">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="w-2 h-6 bg-[#00b087] rounded-sm"></div>
-                  ))}
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="flex gap-1">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div key={i} className="w-2 h-6 bg-[#00b087] rounded-sm"></div>
+                    ))}
+                  </div>
+                  <Battery className="w-4 h-4 text-[#00b087]" />
+                  <span className="text-sm text-[#9798a1]">Battery</span>
                 </div>
-                <Battery className="w-4 h-4 text-[#00b087]" />
-                <span className="text-sm text-[#9798a1]">Battery</span>
-                <span className="font-semibold text-[#292d32]">11.24V</span>
+                <div className="text-lg font-bold text-black">11.24V</div>
               </div>
-              <div className="bg-[#dcfce7] text-[#16a34a] font-semibold text-sm px-4 py-1 rounded-full inline-block">
-                Active
+              <div>
+                <div className="text-sm text-[#9798a1] mb-1">Status</div>
+                <div className="bg-[#dcfce7] text-[#16a34a] font-semibold text-sm px-4 py-1 rounded-full inline-block">
+                  Active
+                </div>
               </div>
             </div>
           </div>
         </div>
-        {/* Control Panel Button - moved to right side */}
+        {/* Control Panel Button - moved to right side with improved design */}
         <Button 
           onClick={handleControlPanel}
           className="bg-[#1b59f8] hover:bg-[#1548d4] text-white px-6 py-2 rounded-lg font-semibold shadow-md flex items-center gap-2"
@@ -177,7 +183,9 @@ export default function Dashboard2() {
             </div>
             <div>
               <p className="text-sm text-[#6b7280] mb-1">Status</p>
-              <Badge className="bg-[#dcfce7] text-[#16a34a] hover:bg-[#dcfce7]">Active</Badge>
+              <div className="bg-[#dcfce7] text-[#16a34a] font-semibold text-sm px-4 py-1 rounded-full inline-block">
+                Active
+              </div>
             </div>
             <div>
               <p className="text-sm text-[#6b7280] mb-1">Maintenance Frequency</p>

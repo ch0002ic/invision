@@ -77,6 +77,11 @@ export default function Dashboard3() {
                 <div className="flex gap-16 items-start">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
+                      <div className="flex gap-1">
+                        {[1, 2, 3, 4].map((i) => (
+                          <div key={i} className="w-2 h-6 bg-[#00b087] rounded-sm"></div>
+                        ))}
+                      </div>
                       <Battery className="w-4 h-4 text-[#00b087]" />
                       <span className="text-sm text-[#9798a1]">Battery</span>
                     </div>
