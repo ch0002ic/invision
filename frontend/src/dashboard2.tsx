@@ -102,8 +102,8 @@ export default function Dashboard2() {
           {/* Scale labels */}
           <div className="flex justify-between w-full text-xs text-[#6b7280] px-2">
             <span>{min}</span>
-            <span>{((min + max) / 2).toFixed(0)}</span>
-            <span>{max}</span>
+            <span>{max <= 1 ? (((min + max) / 2).toFixed(1)) : ((min + max) / 2).toFixed(0)}</span>
+            <span>{max <= 1 ? max.toFixed(1) : max}</span>
           </div>
         </CardContent>
       </Card>
