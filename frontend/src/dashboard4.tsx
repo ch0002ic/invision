@@ -166,13 +166,15 @@ export default function SmartManholeDashboard() {
 		{/* Table Filters */}
 			<div className="flex items-center justify-between p-4">
 			<div className="flex items-center gap-2">
-				<Button
+		 <Button
 				variant="outline"
 				size="sm"
-				className="rounded-full px-4 py-1 text-xs font-semibold bg-[#f7f9fb] text-[#292d32] border border-[#e7e7e7]"
+
+				className="rounded-full px-4 py-1 text-xs font-semibold bg-black text-white"
 				>
 				All
 				</Button>
+
 				<Button
 				variant="outline"
 				size="sm"
