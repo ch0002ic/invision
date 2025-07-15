@@ -41,17 +41,52 @@ export default function Dashboard2() {
   }) => {
     const percentage = Math.min(Math.max(((current - min) / (max - min)) * 100, 0), 100)
     
-    // Fixed calculation for perfect needle and arc alignment
-    // Semicircle: 180° (left) to 0° (right)
-    const angle = Math.PI - (percentage / 100) * Math.PI // π to 0 radians
+    const visualCenterX = 60
+    const visualCenterY = 50
+    const needleLength = 25
     
-    // Arc progress calculation
-    const radius = 40
-    const circumference = Math.PI * radius
-    const strokeDasharray = circumference
-    const strokeDashoffset = circumference * (1 - percentage / 100)
+    // For 0%, point to left red circle (start of arc)
+    // For any value > 0, point to the actual end of the colored arc
+    let needleX, needleY
     
-    // Hide colored arc when at minimum value (0%)
+    if (percentage === 0) {
+      // Point directly to the left red circle
+      const deltaX = 10 - visualCenterX  // Left red circle is at (10, 50)
+      const deltaY = 50 - visualCenterY
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY)
+      needleX = visualCenterX + (deltaX / distance) * needleLength
+      needleY = visualCenterY + (deltaY / distance) * needleLength
+    } else {
+      // Point to where the colored arc actually ends
+      // The arc path goes from (10,50) to (110,50) following the semicircle
+      // Arc length at percentage: (percentage/100) * π * 40
+      const arcLength = (percentage / 100) * Math.PI * 40
+      const totalArcLength = Math.PI * 40
+      
+      // Convert arc length to angle (0 to π radians)
+      const arcAngle = (arcLength / totalArcLength) * Math.PI
+      
+      // Calculate actual end point of colored arc on the semicircle
+      // Starting from left (π radians) and moving clockwise to right (0 radians)
+      const endAngle = Math.PI - arcAngle
+      const arcEndX = 60 + 40 * Math.cos(endAngle)
+      const arcEndY = 10 - 40 * Math.sin(endAngle)
+      
+      // Point needle to this actual arc end
+      const deltaX = arcEndX - visualCenterX
+      const deltaY = arcEndY - visualCenterY
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY)
+      needleX = visualCenterX + (deltaX / distance) * needleLength
+      needleY = visualCenterY + (deltaY / distance) * needleLength
+    }
+    
+    // Arc progress
+    const pathLength = Math.PI * 40  // Total semicircle length
+    const progressLength = (percentage / 100) * pathLength  // How much to show
+    
+    // Use stroke-dasharray with single value to show progress from start
+    const dashArray = `${progressLength} ${pathLength}`
+    
     const showColoredArc = percentage > 0
     
     return (
@@ -70,7 +105,7 @@ export default function Dashboard2() {
                 fill="none"
                 strokeLinecap="round"
               />
-              {/* Progress arc - perfectly synchronized with needle */}
+              {/* Progress arc with proper dasharray */}
               {showColoredArc && (
                 <path
                   d="M 10 50 A 40 40 0 0 1 110 50"
@@ -78,29 +113,40 @@ export default function Dashboard2() {
                   strokeWidth="8"
                   fill="none"
                   strokeLinecap="round"
-                  strokeDasharray={strokeDasharray}
-                  strokeDashoffset={strokeDashoffset}
+                  strokeDasharray={dashArray}
                   className="transition-all duration-500"
                 />
               )}
-              {/* Center dot */}
-              <circle cx="60" cy="50" r="3" fill="#292d32" />
-              {/* Needle - perfectly aligned with progress arc */}
+              
+              {/* Center hub */}
+              <circle cx={visualCenterX} cy={visualCenterY} r="3" fill="#ffffff" stroke="#292d32" strokeWidth="2" />
+              
+              {/* Needle - standardized design */}
               <line
-                x1="60"
-                y1="50"
-                x2={60 + 30 * Math.cos(angle)}
-                y2={50 - 30 * Math.sin(angle)}
+                x1={visualCenterX}
+                y1={visualCenterY}
+                x2={needleX}
+                y2={needleY}
                 stroke="#292d32"
                 strokeWidth="2"
                 strokeLinecap="round"
               />
+              
+              {/* Needle tip dot - standardized design */}
+              <circle 
+                cx={needleX} 
+                cy={needleY} 
+                r="1.5" 
+                fill="#292d32" 
+              />
             </svg>
-            {/* Center value */}
-            <div className="absolute inset-0 flex items-end justify-center pb-1">
+            {/* Center value - positioned directly below needle center */}
+            <div className="absolute" style={{ left: '50%', top: '65px', transform: 'translateX(-50%)' }}>
               <div className="text-center">
-                <div className="text-lg font-bold text-[#292d32]">{value}</div>
-                {unit && <div className="text-xs text-[#6b7280]">{unit}</div>}
+                <div className="text-lg font-bold text-[#292d32] flex items-baseline justify-center gap-1">
+                  <span>{value}</span>
+                  {unit && <span className="text-xs text-[#6b7280]">{unit}</span>}
+                </div>
               </div>
             </div>
           </div>
