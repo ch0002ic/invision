@@ -67,7 +67,7 @@ export default function Layout({ children }: LayoutProps) {
       <aside className="fixed left-6 top-6 bottom-6 w-52 z-30 bg-white rounded-2xl shadow-sm border border-[#f0f2f5] flex flex-col transition-all">
         <div className="p-4 border-b border-[#f0f2f5]">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#1b59f8] rounded-lg flex items-center justify-center overflow-hidden">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
               <img 
                 src={TotalManholeLogo} 
                 alt="Total Manhole Logo" 

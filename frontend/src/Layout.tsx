@@ -49,7 +49,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <div className="flex h-screen bg-[#f7f9fb]">
       {/* Sidebar */}
       <div className="w-64 bg-white border-r border-[#f0f2f5] flex flex-col">
-        {/* ...existing sidebar code... */}
         
         {/* Support Section */}
         <div className="p-6 border-t border-[#f0f2f5]">
