@@ -85,50 +85,50 @@ export default function Layout({ children }: LayoutProps) {
             <Button
               variant="ghost"
               onClick={() => handleNavigation("/dashboard1")}
-              className={`w-full justify-start gap-3 rounded-lg !pl-5 !py-2 !text-base border-l-4 transition-all ${
+              className={`w-full justify-start gap-3 rounded-lg !pl-5 !py-2 !text-base border-l-4 transition-all flex items-center ${
                 isActive("/dashboard1")
                   ? "bg-[#f7f9fb] text-[#1b59f8] font-bold border-[#1b59f8] shadow-none !font-semibold"
                   : "text-[#bfc8d6] hover:bg-[#f7f9fb] border-transparent hover:text-[#292d32]"
               }`}
             >
-              <Home className="w-4 h-4" />
-              Home
+              <Home className="w-4 h-4 flex-shrink-0" />
+              <span className="flex-1 text-left">Home</span>
             </Button>
             <Button
               variant="ghost"
               onClick={() => handleNavigation("/dashboard2")}
-              className={`w-full justify-start gap-3 rounded-lg !pl-5 !py-2 !text-base border-l-4 transition-all ${
+              className={`w-full justify-start gap-3 rounded-lg !pl-5 !py-2 !text-base border-l-4 transition-all flex items-center ${
                 isActive("/dashboard2")
                   ? "bg-[#f7f9fb] text-[#1b59f8] font-bold border-[#1b59f8] shadow-none !font-semibold"
                   : "text-[#bfc8d6] hover:bg-[#f7f9fb] border-transparent hover:text-[#292d32]"
               }`}
             >
-              <Eye className="w-4 h-4" />
-              E-Hole
+              <Eye className="w-4 h-4 flex-shrink-0" />
+              <span className="flex-1 text-left">E-Hole</span>
             </Button>
             <Button
               variant="ghost"
               onClick={() => handleNavigation("/dashboard4")}
-              className={`w-full justify-start gap-3 rounded-lg !pl-5 !py-2 !text-base border-l-4 transition-all ${
+              className={`w-full justify-start gap-3 rounded-lg !pl-5 !py-2 !text-base border-l-4 transition-all flex items-center ${
                 isActive("/dashboard4") || isActive("/dashboard5")
                   ? "bg-[#f7f9fb] text-[#1b59f8] font-bold border-[#1b59f8] shadow-none !font-semibold"
                   : "text-[#bfc8d6] hover:bg-[#f7f9fb] border-transparent hover:text-[#292d32]"
               }`}
             >
-              <FileText className="w-4 h-4" />
-              Reporting Case
+              <FileText className="w-4 h-4 flex-shrink-0" />
+              <span className="flex-1 text-left">Reporting Case</span>
             </Button>
           </div>
           <div className="mt-6">
             <p className="text-xs font-medium text-[#d1d5db] mb-2">Support</p>
             <div className="space-y-1">
-              <Button variant="ghost" className="w-full justify-start gap-3 text-[#bfc8d6] hover:bg-[#f7f9fb] rounded-lg !pl-5 !py-2 !text-base">
-                <HelpCircle className="w-4 h-4" />
-                Get Started
+              <Button variant="ghost" className="w-full justify-start gap-3 text-[#bfc8d6] hover:bg-[#f7f9fb] rounded-lg !pl-5 !py-2 !text-base flex items-center">
+                <HelpCircle className="w-4 h-4 flex-shrink-0" />
+                <span className="flex-1 text-left">Get Started</span>
               </Button>
-              <Button variant="ghost" className="w-full justify-start gap-3 text-[#bfc8d6] hover:bg-[#f7f9fb] rounded-lg !pl-5 !py-2 !text-base">
-                <Settings className="w-4 h-4" />
-                Settings
+              <Button variant="ghost" className="w-full justify-start gap-3 text-[#bfc8d6] hover:bg-[#f7f9fb] rounded-lg !pl-5 !py-2 !text-base flex items-center">
+                <Settings className="w-4 h-4 flex-shrink-0" />
+                <span className="flex-1 text-left">Settings</span>
               </Button>
             </div>
           </div>
@@ -137,10 +137,10 @@ export default function Layout({ children }: LayoutProps) {
           <Button 
             variant="ghost" 
             onClick={handleLogout}
-            className="w-full justify-start gap-3 text-[#df0404] hover:bg-[#fef2f2] rounded-lg font-semibold !text-base"
+            className="w-full justify-start gap-3 text-[#df0404] hover:bg-[#fef2f2] rounded-lg font-semibold !text-base flex items-center"
           >
-            <LogOut className="w-4 h-4" />
-            Logout
+            <LogOut className="w-4 h-4 flex-shrink-0" />
+            <span className="flex-1 text-left">Logout</span>
           </Button>
         </div>
       </aside>

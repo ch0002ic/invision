@@ -161,7 +161,7 @@ export default function Dashboard2() {
         {/* Control Panel Button - moved to right side with improved design */}
         <Button 
           onClick={handleControlPanel}
-          className="bg-[#1b59f8] hover:bg-[#1548d4] text-white px-6 py-2 rounded-lg font-semibold shadow-md flex items-center gap-2"
+          className="bg-[#00b087] hover:bg-[#059669] text-white px-6 py-2 rounded-lg font-semibold shadow-md flex items-center gap-2"
         >
           <Settings className="w-4 h-4" />
           Control Panel
