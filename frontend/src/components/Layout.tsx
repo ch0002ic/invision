@@ -128,15 +128,16 @@ export default function Layout({ children }: LayoutProps) {
                 <span className="flex-1 text-left">Settings</span>
               </Button>
             </div>
-            {/* Logout Button - Display Only */}
-            <div className="mt-4 pt-4 border-t border-[#f0f2f5]">
-              <div className="w-full justify-start gap-3 rounded-lg pl-5 py-2 text-base border-l-4 border-transparent flex items-center text-red-600 bg-red-50 border border-red-200">
-                <LogOut className="w-4 h-4 flex-shrink-0" />
-                <span className="flex-1 text-left font-medium">Logout</span>
-              </div>
-            </div>
           </div>
         </nav>
+        
+        {/* Logout Button - Display Only - Bottom of Sidebar */}
+        <div className="p-4 border-t border-[#f0f2f5]">
+          <div className="w-full justify-start gap-3 rounded-lg pl-5 py-2 text-base flex items-center text-red-600 bg-red-50 border border-red-200 cursor-not-allowed">
+            <LogOut className="w-4 h-4 flex-shrink-0" />
+            <span className="flex-1 text-left font-medium">Logout</span>
+          </div>
+        </div>
       </aside>
 
       {/* Main Content Floating Card Group */}
