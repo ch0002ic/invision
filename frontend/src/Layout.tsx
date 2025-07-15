@@ -10,7 +10,6 @@ import {
   User,
   X,
 } from "lucide-react"
-import profilePic from "./assets/profilepic.png"
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation()
@@ -68,6 +67,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               <Settings className="w-4 h-4" />
               Settings
             </button>
+            <div className="flex items-center gap-3 w-full text-left p-2 text-sm text-[#6b7280] opacity-50 cursor-not-allowed rounded-lg">
+              <LogOut className="w-4 h-4" />
+              Logout
+            </div>
           </div>
         </div>
       </div>
