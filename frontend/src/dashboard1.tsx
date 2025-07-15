@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import {
   AlertTriangle,
@@ -20,6 +21,7 @@ import TotalManholeIcon from "./assets/TotalManhole.png"
 
 
 export default function Dashboard1() {
+  const navigate = useNavigate()
   const [activeFilter, setActiveFilter] = useState("All Manholes")
   const [currentPage, setCurrentPage] = useState(1)
   const [sortBy, setSortBy] = useState("newest")
@@ -428,7 +430,11 @@ const fetchWeather = async () => {
               </TableHeader>
               <TableBody>
                 {currentData.map((item) => (
-                  <TableRow key={item.id} className="border-[#f0f2f5] hover:bg-[#f9fbff]">
+                  <TableRow 
+                    key={item.id} 
+                    className="border-[#f0f2f5] hover:bg-[#f9fbff] cursor-pointer transition-colors"
+                    onClick={() => navigate("/dashboard2")}
+                  >
                     <TableCell className="w-1/6 text-center font-bold text-[#292d32] text-xs py-1.5">{item.id}</TableCell>
                     <TableCell className="w-1/6 text-center text-[#292d32] text-xs py-1.5">{item.location}</TableCell>
                     <TableCell className="w-1/6 text-center text-[#292d32] text-xs py-1.5">{item.type}</TableCell>

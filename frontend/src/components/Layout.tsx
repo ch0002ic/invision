@@ -13,6 +13,7 @@ import {
 import { Button } from "./ui/button"
 import { Avatar, AvatarImage } from "./ui/avatar"
 import profilePic from "../assets/profilepic.png"
+import TotalManholeLogo from "../assets/TotalManhole.png"
 
 interface LayoutProps {
   children: React.ReactNode
@@ -66,8 +67,12 @@ export default function Layout({ children }: LayoutProps) {
       <aside className="fixed left-6 top-6 bottom-6 w-52 z-30 bg-white rounded-2xl shadow-sm border border-[#f0f2f5] flex flex-col transition-all">
         <div className="p-4 border-b border-[#f0f2f5]">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#1b59f8] rounded-lg flex items-center justify-center">
-              <div className="w-4 h-4 bg-white rounded-sm"></div>
+            <div className="w-8 h-8 bg-[#1b59f8] rounded-lg flex items-center justify-center overflow-hidden">
+              <img 
+                src={TotalManholeLogo} 
+                alt="Total Manhole Logo" 
+                className="w-6 h-6 object-contain"
+              />
             </div>
             <div>
               <h1 className="font-semibold text-[#292d32] text-sm">Smart Manhole</h1>
