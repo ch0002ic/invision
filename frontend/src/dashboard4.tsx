@@ -1,8 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { X, Search, Wrench, ChevronLeft,
-  ChevronRight, } from "lucide-react"
+import { X, Search, Wrench, ChevronLeft, ChevronRight, } from "lucide-react"
 import { Badge } from "./components/ui/badge"
 import { Button } from "./components/ui/button"
 import Layout from "./components/Layout"
@@ -130,47 +129,13 @@ export default function SmartManholeDashboard() {
   const [selectedManhole, setSelectedManhole] = useState<Manhole | null>(null)
   const [sortOrder, setSortOrder] = useState("newest")
   const [searchQuery, setSearchQuery] = useState("")
-  const [statusFilter, setStatusFilter] = useState("all")
   const [currentPage, setCurrentPage] = useState(1)
   const [mapVisible, setMapVisible] = useState(false)
 
   const itemsPerPage = 8
 
-  // Get badge colors based on status
-  const getBadgeColor = (status: string) => {
-    switch (status) {
-      case "Critical":
-        return "bg-[#ffc5c5] text-[#df0404]"
-      case "Warning":
-        return "bg-[#fff3cd] text-[#856404]"
-      case "Active":
-        return "bg-[#dcfce7] text-[#16a34a]"
-      case "Maintenance":
-        return "bg-[#e0e7ff] text-[#3730a3]"
-      case "Inactive":
-        return "bg-[#f3f4f6] text-[#374151]"
-      default:
-        return "bg-[#f3f4f6] text-[#374151]"
-    }
-  }
-
-  // Status filter options
-  const statusOptions = [
-    { value: "all", label: "All Status", count: manholeData.length },
-    { value: "Critical", label: "Critical", count: manholeData.filter(m => m.status === "Critical").length },
-    { value: "Warning", label: "Warning", count: manholeData.filter(m => m.status === "Warning").length },
-    { value: "Active", label: "Active", count: manholeData.filter(m => m.status === "Active").length },
-    { value: "Maintenance", label: "Maintenance", count: manholeData.filter(m => m.status === "Maintenance").length },
-    { value: "Inactive", label: "Inactive", count: manholeData.filter(m => m.status === "Inactive").length },
-  ]
-
   const filteredAndSortedManholes = manholeData
-    .filter((m) => {
-      const matchesSearch = m.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           m.location.toLowerCase().includes(searchQuery.toLowerCase())
-      const matchesStatus = statusFilter === "all" || m.status === statusFilter
-      return matchesSearch && matchesStatus
-    })
+    .filter((m) => m.id.toLowerCase().includes(searchQuery.toLowerCase()))
     .sort((a, b) => {
       const dateA = new Date(a.reportDate)
       const dateB = new Date(b.reportDate)
@@ -200,24 +165,36 @@ export default function SmartManholeDashboard() {
 		{/* Table Filters */}
 			<div className="flex items-center justify-between p-4">
 			<div className="flex items-center gap-2">
-				{statusOptions.map((option) => (
-					<Button
-						key={option.value}
-						variant="outline"
-						size="sm"
-						onClick={() => {
-							setStatusFilter(option.value)
-							setCurrentPage(1) // Reset to first page when filtering
-						}}
-						className={`rounded-full px-4 py-1 text-xs font-semibold border border-[#e7e7e7] ${
-							statusFilter === option.value
-								? "bg-[#1b59f8] text-white border-[#1b59f8]"
-								: "bg-[#f7f9fb] text-[#292d32] hover:bg-[#e5e7eb]"
-						}`}
-					>
-						{option.label} ({option.count})
-					</Button>
-				))}
+		 <Button
+				variant="outline"
+				size="sm"
+
+				className="rounded-full px-4 py-1 text-xs font-semibold bg-black text-white"
+				>
+				All
+				</Button>
+
+				<Button
+				variant="outline"
+				size="sm"
+				className="rounded-full px-4 py-1 text-xs font-semibold bg-[#f7f9fb] text-[#292d32] border border-[#e7e7e7]"
+				>
+				Critical
+				</Button>
+				<Button
+				variant="outline"
+				size="sm"
+				className="rounded-full px-4 py-1 text-xs font-semibold bg-[#f7f9fb] text-[#292d32] border border-[#e7e7e7]"
+				>
+				Maintenance
+				</Button>
+				<Button
+				variant="outline"
+				size="sm"
+				className="rounded-full px-4 py-1 text-xs font-semibold bg-[#f7f9fb] text-[#292d32] border border-[#e7e7e7]"
+				>
+				Completed
+				</Button>
 			</div>
 			</div>
 
@@ -276,7 +253,7 @@ export default function SmartManholeDashboard() {
                   <td className="py-3 px-4 text-sm text-[#292d32]">{manhole.gasThreshold}</td>
                   <td className="py-3 px-4 text-sm text-[#292d32]">{manhole.reportDate}</td>
                   <td className="py-3 px-4">
-                    <Badge className={`${getBadgeColor(manhole.status)} px-3 py-1 text-sm font-semibold rounded-full`}>
+                    <Badge className="bg-[#ffc5c5] text-[#df0404] px-3 py-1 text-sm font-semibold rounded-full">
                       {manhole.status}
                     </Badge>
                   </td>
@@ -377,7 +354,7 @@ export default function SmartManholeDashboard() {
                   </div>
                   <div>
                     <p className="text-xs text-[#7e7e7e] mb-1">Status</p>
-                    <Badge className={`${getBadgeColor(selectedManhole.status)} px-3 py-1 text-sm font-semibold rounded-full`}>
+                    <Badge className="bg-[#ffc5c5] text-[#df0404] px-3 py-1 text-sm font-semibold rounded-full">
                       {selectedManhole.status}
                     </Badge>
                   </div>
