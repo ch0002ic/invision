@@ -6,11 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card"
 import { Badge } from "./components/ui/badge"
 import Layout from "./components/Layout"
 import { useNavigate } from "react-router-dom"
-import { useState, useEffect } from "react"
+import EholeImage from "./assets/ehole.png"
+import MethaneGraph from "./assets/methane_graph.png"
+import WaterLevelGraph from "./assets/water_level_graph.png"
 
 export default function Dashboard2() {
   const navigate = useNavigate()
-  const [lastUpdated, setLastUpdated] = useState(new Date())
 
   const handleEdit = () => {
     alert("Edit Settings:\n• Water level thresholds\n• Gas detection limits\n• Alert notifications\n• Maintenance schedule\n• Device configuration")
@@ -19,27 +20,6 @@ export default function Dashboard2() {
   const handleControlPanel = () => {
     // Navigate to control panel for this specific e-hole
     navigate("/dashboard3")
-  }
-
-  // Update last updated time every 30 seconds to simulate real-time updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLastUpdated(new Date())
-    }, 30000) // Update every 30 seconds
-
-    return () => clearInterval(interval)
-  }, [])
-
-  // Format the date for display
-  const formatLastUpdated = (date: Date) => {
-    return date.toLocaleString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false
-    }).replace(',', '')
   }
 
   // Gauge component for circular meters
@@ -62,12 +42,14 @@ export default function Dashboard2() {
   }) => {
     const percentage = Math.min(Math.max(((current - min) / (max - min)) * 100, 0), 100)
     
-    // Calculate angle for semicircle gauge - ensuring perfect alignment
-    const needleAngle = 180 - (percentage / 100) * 180 // 180° to 0° (left to right)
+    // Calculate needle angle: 0% = 180° (left), 100% = 0° (right)
+    const needleAngleDeg = 180 - (percentage / 100) * 180
+    const needleAngleRad = (needleAngleDeg * Math.PI) / 180
     
-    // Calculate stroke dash for progress arc to match needle position exactly
-    const arcLength = Math.PI * 40 // Half circle circumference (π * radius)
-    const progressLength = (percentage / 100) * arcLength
+    // Arc calculation - SVG path from left to right
+    const radius = 40
+    const totalArcLength = Math.PI * radius // Total semicircle length
+    const progressArcLength = (percentage / 100) * totalArcLength
     
     return (
       <Card className="p-4 bg-white border border-[#e5e7eb] shadow-sm">
@@ -85,25 +67,25 @@ export default function Dashboard2() {
                 fill="none"
                 strokeLinecap="round"
               />
-              {/* Progress arc - perfectly synchronized with needle */}
+              {/* Progress arc - perfectly aligned with needle position */}
               <path
                 d="M 10 50 A 40 40 0 0 1 110 50"
                 stroke={color}
                 strokeWidth="8"
                 fill="none"
                 strokeLinecap="round"
-                strokeDasharray={arcLength}
-                strokeDashoffset={arcLength - progressLength}
+                strokeDasharray={totalArcLength}
+                strokeDashoffset={totalArcLength - progressArcLength}
                 className="transition-all duration-500"
               />
               {/* Center dot */}
               <circle cx="60" cy="50" r="3" fill="#292d32" />
-              {/* Needle - perfectly aligned with progress arc */}
+              {/* Needle - aligned exactly with progress arc endpoint */}
               <line
                 x1="60"
                 y1="50"
-                x2={60 + 30 * Math.cos((needleAngle * Math.PI) / 180)}
-                y2={50 - 30 * Math.sin((needleAngle * Math.PI) / 180)}
+                x2={60 + 30 * Math.cos(needleAngleRad)}
+                y2={50 - 30 * Math.sin(needleAngleRad)}
                 stroke="#292d32"
                 strokeWidth="2"
                 strokeLinecap="round"
@@ -133,34 +115,12 @@ export default function Dashboard2() {
       {/* Title Section */}
       <div className="flex items-center gap-6 mb-8">
         <div className="w-28 h-28 bg-white rounded-full border border-[#e5e7eb] flex items-center justify-center overflow-hidden shadow-sm">
-          {/* Manhole Device SVG Icon */}
-          <svg width="80" height="80" viewBox="0 0 100 100" className="text-[#6b7280]">
-            {/* Manhole cover base */}
-            <circle cx="50" cy="50" r="40" fill="#4a5568" stroke="#2d3748" strokeWidth="2"/>
-            {/* Grid pattern */}
-            <g stroke="#718096" strokeWidth="1" fill="none">
-              <line x1="20" y1="30" x2="80" y2="30"/>
-              <line x1="20" y1="40" x2="80" y2="40"/>
-              <line x1="20" y1="50" x2="80" y2="50"/>
-              <line x1="20" y1="60" x2="80" y2="60"/>
-              <line x1="20" y1="70" x2="80" y2="70"/>
-              <line x1="30" y1="20" x2="30" y2="80"/>
-              <line x1="40" y1="20" x2="40" y2="80"/>
-              <line x1="50" y1="20" x2="50" y2="80"/>
-              <line x1="60" y1="20" x2="60" y2="80"/>
-              <line x1="70" y1="20" x2="70" y2="80"/>
-            </g>
-            {/* Center sensor */}
-            <circle cx="50" cy="50" r="8" fill="#3182ce"/>
-            <circle cx="50" cy="50" r="4" fill="#2b6cb0"/>
-            {/* Corner bolts */}
-            <circle cx="25" cy="25" r="3" fill="#2d3748"/>
-            <circle cx="75" cy="25" r="3" fill="#2d3748"/>
-            <circle cx="25" cy="75" r="3" fill="#2d3748"/>
-            <circle cx="75" cy="75" r="3" fill="#2d3748"/>
-            {/* Label */}
-            <text x="50" y="90" textAnchor="middle" fontSize="8" fill="#4a5568">E-HOLE</text>
-          </svg>
+          {/* Manhole Device Image */}
+          <img 
+            src={EholeImage} 
+            alt="E-Hole Device" 
+            className="w-20 h-20 object-cover rounded-full"
+          />
         </div>
         <div>
           <div className="flex items-center gap-2 mb-2">
@@ -256,76 +216,21 @@ export default function Dashboard2() {
             <div className="bg-white rounded-lg border border-[#e5e7eb] p-4">
               <h3 className="text-sm font-semibold text-[#292d32] mb-2">Methane Chart</h3>
               <div className="h-32 relative">
-                <svg width="100%" height="100%" viewBox="0 0 300 120" className="overflow-visible">
-                  {/* Grid lines */}
-                  <defs>
-                    <pattern id="grid" width="30" height="12" patternUnits="userSpaceOnUse">
-                      <path d="M 30 0 L 0 0 0 12" fill="none" stroke="#e5e7eb" strokeWidth="0.5"/>
-                    </pattern>
-                  </defs>
-                  <rect width="100%" height="100%" fill="url(#grid)" />
-                  
-                  {/* Chart line */}
-                  <polyline
-                    fill="none"
-                    stroke="#3b82f6"
-                    strokeWidth="2"
-                    points="0,80 30,70 60,85 90,60 120,75 150,45 180,55 210,35 240,50 270,40 300,30"
-                  />
-                  
-                  {/* Data points */}
-                  {[
-                    [0,80], [30,70], [60,85], [90,60], [120,75], [150,45], 
-                    [180,55], [210,35], [240,50], [270,40], [300,30]
-                  ].map(([x, y], i) => (
-                    <circle key={i} cx={x} cy={y} r="2" fill="#3b82f6" />
-                  ))}
-                  
-                  {/* Y-axis labels */}
-                  <text x="5" y="15" fontSize="10" fill="#6b7280">300</text>
-                  <text x="5" y="45" fontSize="10" fill="#6b7280">200</text>
-                  <text x="5" y="75" fontSize="10" fill="#6b7280">100</text>
-                  <text x="5" y="105" fontSize="10" fill="#6b7280">0</text>
-                </svg>
+                <img 
+                  src={MethaneGraph} 
+                  alt="Methane Graph" 
+                  className="w-full h-full object-contain"
+                />
               </div>
             </div>
             <div className="bg-white rounded-lg border border-[#e5e7eb] p-4">
               <h3 className="text-sm font-semibold text-[#292d32] mb-2">Water Level Chart</h3>
               <div className="h-32 relative">
-                <svg width="100%" height="100%" viewBox="0 0 300 120" className="overflow-visible">
-                  {/* Grid lines */}
-                  <rect width="100%" height="100%" fill="url(#grid)" />
-                  
-                  {/* Water level area chart */}
-                  <path
-                    d="M0,90 L30,85 L60,80 L90,85 L120,70 L150,65 L180,75 L210,60 L240,55 L270,65 L300,50 L300,120 L0,120 Z"
-                    fill="rgba(59, 130, 246, 0.2)"
-                    stroke="#3b82f6"
-                    strokeWidth="2"
-                  />
-                  
-                  {/* Peak indicator line */}
-                  <line x1="240" y1="20" x2="240" y2="100" stroke="#ef4444" strokeWidth="2" strokeDasharray="4,4" />
-                  
-                  {/* Data points */}
-                  {[
-                    [30,85], [60,80], [90,85], [120,70], [150,65], 
-                    [180,75], [210,60], [240,55], [270,65], [300,50]
-                  ].map(([x, y], i) => (
-                    <circle key={i} cx={x} cy={y} r="2" fill="#3b82f6" />
-                  ))}
-                  
-                  {/* Peak point */}
-                  <circle cx="240" cy="55" r="3" fill="#ef4444" />
-                  
-                  {/* Y-axis labels */}
-                  <text x="5" y="15" fontSize="10" fill="#6b7280">1000</text>
-                  <text x="5" y="35" fontSize="10" fill="#6b7280">800</text>
-                  <text x="5" y="55" fontSize="10" fill="#6b7280">600</text>
-                  <text x="5" y="75" fontSize="10" fill="#6b7280">400</text>
-                  <text x="5" y="95" fontSize="10" fill="#6b7280">200</text>
-                  <text x="5" y="115" fontSize="10" fill="#6b7280">0</text>
-                </svg>
+                <img 
+                  src={WaterLevelGraph} 
+                  alt="Water Level Graph" 
+                  className="w-full h-full object-contain"
+                />
               </div>
             </div>
           </div>
