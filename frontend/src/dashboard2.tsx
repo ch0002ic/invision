@@ -113,49 +113,53 @@ export default function Dashboard2() {
   return (
     <Layout>
       {/* Title Section */}
-      <div className="flex items-center gap-6 mb-8">
-        <div className="w-28 h-28 bg-white rounded-full border border-[#e5e7eb] flex items-center justify-center overflow-hidden shadow-sm">
-          {/* Manhole Device Image */}
-          <img 
-            src={EholeImage} 
-            alt="E-Hole Device" 
-            className="w-20 h-20 object-cover rounded-full"
-          />
-        </div>
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <h1 className="text-2xl font-bold">E-Hole : 237001</h1>
-            <Button 
-              onClick={handleEdit}
-              variant="ghost" 
-              size="icon" 
-              className="p-1"
-            >
-              <Edit className="w-4 h-4" />
-            </Button>
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-6">
+          <div className="w-28 h-28 bg-white rounded-full border border-[#e5e7eb] flex items-center justify-center overflow-hidden shadow-sm">
+            {/* Manhole Device Image */}
+            <img 
+              src={EholeImage} 
+              alt="E-Hole Device" 
+              className="w-20 h-20 object-cover rounded-full"
+            />
           </div>
-          <div className="flex items-center gap-4 mb-3">
-            <div className="flex items-center gap-2">
-              <div className="flex gap-1">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="w-2 h-6 bg-[#00b087] rounded-sm"></div>
-                ))}
-              </div>
-              <Battery className="w-4 h-4 text-[#00b087]" />
-              <span className="text-sm text-[#6b7280]">Battery</span>
-              <span className="font-semibold text-[#292d32]">11.24V</span>
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <h1 className="text-2xl font-bold">E-Hole : 237001</h1>
+              <Button 
+                onClick={handleEdit}
+                variant="ghost" 
+                size="icon" 
+                className="p-1"
+              >
+                <Edit className="w-4 h-4" />
+              </Button>
             </div>
-            <Badge className="bg-[#dcfce7] text-[#16a34a] hover:bg-[#dcfce7]">Active</Badge>
+            <div className="flex items-center gap-4 mb-3">
+              <div className="flex items-center gap-2">
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="w-2 h-6 bg-[#00b087] rounded-sm"></div>
+                  ))}
+                </div>
+                <Battery className="w-4 h-4 text-[#00b087]" />
+                <span className="text-sm text-[#9798a1]">Battery</span>
+                <span className="font-semibold text-[#292d32]">11.24V</span>
+              </div>
+              <div className="bg-[#dcfce7] text-[#16a34a] font-semibold text-sm px-4 py-1 rounded-full inline-block">
+                Active
+              </div>
+            </div>
           </div>
-          {/* Control Panel Button */}
-          <Button 
-            onClick={handleControlPanel}
-            className="bg-[#1b59f8] hover:bg-[#1548d4] text-white px-6 py-2 rounded-lg font-semibold shadow-md flex items-center gap-2"
-          >
-            <Settings className="w-4 h-4" />
-            Control Panel
-          </Button>
         </div>
+        {/* Control Panel Button - moved to right side */}
+        <Button 
+          onClick={handleControlPanel}
+          className="bg-[#1b59f8] hover:bg-[#1548d4] text-white px-6 py-2 rounded-lg font-semibold shadow-md flex items-center gap-2"
+        >
+          <Settings className="w-4 h-4" />
+          Control Panel
+        </Button>
       </div>
 
         {/* Device Details Section */}
