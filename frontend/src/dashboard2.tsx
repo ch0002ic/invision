@@ -51,6 +51,9 @@ export default function Dashboard2() {
     const strokeDasharray = circumference
     const strokeDashoffset = circumference * (1 - percentage / 100)
     
+    // Hide colored arc when at minimum value (0%)
+    const showColoredArc = percentage > 0
+    
     return (
       <Card className="p-4 bg-white border border-[#e5e7eb] shadow-sm">
         <CardHeader className="pb-2">
@@ -68,16 +71,18 @@ export default function Dashboard2() {
                 strokeLinecap="round"
               />
               {/* Progress arc - perfectly synchronized with needle */}
-              <path
-                d="M 10 50 A 40 40 0 0 1 110 50"
-                stroke={color}
-                strokeWidth="8"
-                fill="none"
-                strokeLinecap="round"
-                strokeDasharray={strokeDasharray}
-                strokeDashoffset={strokeDashoffset}
-                className="transition-all duration-500"
-              />
+              {showColoredArc && (
+                <path
+                  d="M 10 50 A 40 40 0 0 1 110 50"
+                  stroke={color}
+                  strokeWidth="8"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeDasharray={strokeDasharray}
+                  strokeDashoffset={strokeDashoffset}
+                  className="transition-all duration-500"
+                />
+              )}
               {/* Center dot */}
               <circle cx="60" cy="50" r="3" fill="#292d32" />
               {/* Needle - perfectly aligned with progress arc */}
