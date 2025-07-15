@@ -139,11 +139,6 @@ export default function Dashboard2() {
             <div className="flex items-center gap-4 mb-3">
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="flex gap-1">
-                    {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="w-2 h-6 bg-[#00b087] rounded-sm"></div>
-                    ))}
-                  </div>
                   <Battery className="w-4 h-4 text-[#00b087]" />
                   <span className="text-sm text-[#9798a1]">Battery</span>
                 </div>
@@ -161,7 +156,7 @@ export default function Dashboard2() {
         {/* Control Panel Button - moved to right side with improved design */}
         <Button 
           onClick={handleControlPanel}
-          className="bg-[#00b087] hover:bg-[#059669] text-white px-6 py-2 rounded-lg font-semibold shadow-md flex items-center gap-2"
+          className="bg-white hover:bg-gray-50 text-black border border-gray-300 hover:border-gray-400 px-6 py-2 rounded-lg font-semibold shadow-md flex items-center gap-2"
         >
           <Settings className="w-4 h-4" />
           Control Panel
