@@ -127,7 +127,7 @@ const manholeData: Manhole[] = [
 
 export default function SmartManholeDashboard() {
   const [selectedManhole, setSelectedManhole] = useState<Manhole | null>(null)
-  const [sortOrder, setSortOrder] = useState("newest")
+  const [sortOrder, setSortOrder] = useState("oldest")
   const [searchQuery, setSearchQuery] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
   const [mapVisible, setMapVisible] = useState(false)

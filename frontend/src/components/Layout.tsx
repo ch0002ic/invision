@@ -133,7 +133,7 @@ export default function Layout({ children }: LayoutProps) {
         
         {/* Logout Button - Display Only - Bottom of Sidebar */}
         <div className="p-4 border-t border-[#f0f2f5]">
-          <div className="w-full justify-start gap-3 rounded-lg pl-5 py-2 text-base flex items-center text-red-600 bg-red-50 border border-red-200 cursor-not-allowed">
+          <div className="w-full justify-start gap-3 rounded-lg pl-5 py-2 text-base flex items-center text-red-600 bg-red-50 cursor-not-allowed">
             <LogOut className="w-4 h-4 flex-shrink-0" />
             <span className="flex-1 text-left font-medium">Logout</span>
           </div>
@@ -159,7 +159,7 @@ export default function Layout({ children }: LayoutProps) {
                   <Avatar className="w-8 h-8">
                     <AvatarImage src={profilePic} />
                   </Avatar>
-                  <span className="text-sm font-medium text-[#292d32]">Melody Wong</span>
+                  <span className="text-sm font-medium text-[#292d32]">Wong Jie</span>
                   <ChevronDown className="w-4 h-4 text-[#9098a3]" />
                 </div>
               </div>
