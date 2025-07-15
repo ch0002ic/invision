@@ -24,7 +24,7 @@ export default function Dashboard1() {
   const navigate = useNavigate()
   const [activeFilter, setActiveFilter] = useState("All Manholes")
   const [currentPage, setCurrentPage] = useState(1)
-  const [sortBy, setSortBy] = useState("newest")
+  const [sortBy, setSortBy] = useState("oldest")
 
   // Weather API integration (Penang, Malaysia)
 const [weather, setWeather] = useState({
