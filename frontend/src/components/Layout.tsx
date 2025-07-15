@@ -1,8 +1,17 @@
-import React, { useState } from "react"
+import React from "react"
 import { useNavigate, useLocation } from "react-router-dom"
-import { Bell, Home, Eye, FileText, HelpCircle, Settings, LogOut, ChevronDown } from "lucide-react"
+import {
+  Bell,
+  Home,
+  Eye,
+  FileText,
+  HelpCircle,
+  Settings,
+  LogOut,
+  ChevronDown
+} from "lucide-react"
 import { Button } from "./ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { Avatar, AvatarImage } from "./ui/avatar"
 import profilePic from "../assets/profilepic.png"
 
 interface LayoutProps {
@@ -13,7 +22,6 @@ interface LayoutProps {
 export default function Layout({ children, lastUpdated = "2025-01-15 14:32" }: LayoutProps) {
   const navigate = useNavigate()
   const location = useLocation()
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   const isActive = (path: string) => {
     if (path === "/" && location.pathname === "/") return true
@@ -124,56 +132,13 @@ export default function Layout({ children, lastUpdated = "2025-01-15 14:32" }: L
                   <Bell className="w-6 h-6 text-[#9098a3]" />
                   <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#df0404] rounded-full border-2 border-white shadow" />
                 </Button>
-                
-                {/* Profile Dropdown with Hover */}
-                <div 
-                  className="relative"
-                  onMouseEnter={() => setIsDropdownOpen(true)}
-                  onMouseLeave={() => setIsDropdownOpen(false)}
-                >
-                  <Button variant="ghost" className="flex items-center gap-1 p-0 h-10 min-w-0 hover:bg-transparent">
-                    <Avatar className="w-8 h-8">
-                      <AvatarImage src={profilePic} />
-                      <AvatarFallback className="bg-[#1b59f8] text-white text-sm">MW</AvatarFallback>
-                    </Avatar>
-                    <span className="text-sm font-normal text-[#5a6473] ml-2">Melody Wong</span>
-                    <ChevronDown className={`w-3 h-3 text-[#bfc8d6] ml-1 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
-                  </Button>
-                  
-                  {/* Dropdown Menu */}
-                  {isDropdownOpen && (
-                    <div className="absolute right-0 top-full mt-2 min-w-[160px] bg-white rounded-lg shadow-lg border border-[#f0f2f5] py-2 z-50">
-                      <button 
-                        className="w-full px-4 py-2 text-left text-sm text-[#292d32] hover:bg-[#f7f9fb] cursor-pointer"
-                        onClick={() => setIsDropdownOpen(false)}
-                      >
-                        Profile Settings
-                      </button>
-                      <button 
-                        className="w-full px-4 py-2 text-left text-sm text-[#292d32] hover:bg-[#f7f9fb] cursor-pointer"
-                        onClick={() => setIsDropdownOpen(false)}
-                      >
-                        Account Settings
-                      </button>
-                      <button 
-                        className="w-full px-4 py-2 text-left text-sm text-[#292d32] hover:bg-[#f7f9fb] cursor-pointer"
-                        onClick={() => setIsDropdownOpen(false)}
-                      >
-                        Notifications
-                      </button>
-                      <div className="h-px bg-[#f0f2f5] my-1"></div>
-                      <button 
-                        className="w-full px-4 py-2 text-left text-sm text-[#df0404] hover:bg-[#fef2f2] cursor-pointer flex items-center"
-                        onClick={() => {
-                          setIsDropdownOpen(false)
-                          handleLogout()
-                        }}
-                      >
-                        <LogOut className="w-4 h-4 mr-2" />
-                        Logout
-                      </button>
-                    </div>
-                  )}
+
+                <div className="flex items-center gap-2 cursor-pointer hover:bg-[#f7f9fb] px-2 py-1 rounded-lg transition">
+                  <Avatar className="w-8 h-8">
+                    <AvatarImage src={profilePic} />
+                  </Avatar>
+                  <span className="text-sm font-medium text-[#292d32]">Melody Wong</span>
+                  <ChevronDown className="w-4 h-4 text-[#9098a3]" />
                 </div>
               </div>
             </header>

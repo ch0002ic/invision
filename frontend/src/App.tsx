@@ -30,6 +30,8 @@ export default function App() {
         <Route path="/dashboard2" element={<Dashboard2 />} />
         <Route path="/dashboard3" element={<Dashboard3 />} />
         <Route path="/dashboard4" element={<Dashboard4 />} />
+        {/* Dashboard5 route ready for future use */}
+        {/* <Route path="/dashboard5" element={<Dashboard5 />} /> */}
         {/* Redirect old control-panel route to dashboard3 for backward compatibility */}
         <Route path="/control-panel/:id" element={<Navigate to="/dashboard3" replace />} />
         {/* 404 catch-all route */}

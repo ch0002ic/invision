@@ -6,9 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card"
 import { Badge } from "./components/ui/badge"
 import Layout from "./components/Layout"
 import { useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react"
 
 export default function Dashboard2() {
   const navigate = useNavigate()
+  const [lastUpdated, setLastUpdated] = useState(new Date())
 
   const handleEdit = () => {
     alert("Edit Settings:\n• Water level thresholds\n• Gas detection limits\n• Alert notifications\n• Maintenance schedule\n• Device configuration")
@@ -17,6 +19,27 @@ export default function Dashboard2() {
   const handleControlPanel = () => {
     // Navigate to control panel for this specific e-hole
     navigate("/dashboard3")
+  }
+
+  // Update last updated time every 30 seconds to simulate real-time updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLastUpdated(new Date())
+    }, 30000) // Update every 30 seconds
+
+    return () => clearInterval(interval)
+  }, [])
+
+  // Format the date for display
+  const formatLastUpdated = (date: Date) => {
+    return date.toLocaleString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).replace(',', '')
   }
 
   // Gauge component for circular meters
@@ -143,7 +166,7 @@ export default function Dashboard2() {
           </div>
           <div className="text-right">
             <p className="text-sm text-[#6b7280]">Last Updated</p>
-            <p className="text-lg font-semibold">2025-01-15 14:32</p>
+            <p className="text-lg font-semibold">{formatLastUpdated(lastUpdated)}</p>
           </div>
         </div>
 

@@ -124,11 +124,11 @@ const fetchWeather = async () => {
     let filtered = manholeData
 
     // Apply filters
-    if (activeFilter === "Critical Only") {
+    if (activeFilter === "Critical") {
       filtered = manholeData.filter(item => item.status === "Critical")
-    } else if (activeFilter === "Maintenance Due") {
+    } else if (activeFilter === "Normal") {
       // For demo purposes, showing items that need maintenance (could be based on last maintenance date)
-      filtered = manholeData.filter(item => item.id === "237002" || item.id === "237008")
+      filtered = manholeData.filter(item => item.status === "Active")
     }
 
     // Apply sorting
@@ -137,12 +137,7 @@ const fetchWeather = async () => {
         return b.id.localeCompare(a.id) // Higher IDs first (newer)
       } else if (sortBy === "oldest") {
         return a.id.localeCompare(b.id) // Lower IDs first (older)
-      } else if (sortBy === "status") {
-        // Critical first, then Active
-        if (a.status === "Critical" && b.status !== "Critical") return -1
-        if (b.status === "Critical" && a.status !== "Critical") return 1
-        return a.id.localeCompare(b.id)
-      }
+      } 
       return 0
     })
 
@@ -164,7 +159,7 @@ const fetchWeather = async () => {
         <Card className="flex-1 bg-white border border-[#f0f2f5] shadow rounded-lg">
           <CardContent className="p-5 flex items-center gap-4">
             <div className="flex-1">
-              <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Total Manholes</p>
+              <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Total E-holes</p>
               <p className="text-2xl font-bold text-[#292d32]">24</p>
             </div>
             <div className="w-8 h-8 bg-[#eaf1ff] rounded-lg flex items-center justify-center">
@@ -207,7 +202,7 @@ const fetchWeather = async () => {
         <Card className="flex-1 bg-white border border-[#f0f2f5] shadow rounded-lg">
           <CardContent className="p-5 flex items-center gap-4">
             <div className="flex-1">
-              <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Maintenance Due</p>
+              <p className="text-xs text-[#bfc8d6] mb-1 font-semibold">Maintenance</p>
               <p className="text-2xl font-bold text-[#292d32]">2</p>
             </div>
             <div className="w-8 h-8 bg-[#ffedd5] rounded-lg flex items-center justify-center">
@@ -222,7 +217,7 @@ const fetchWeather = async () => {
         {/* Map Section */}
         <Card className="flex-[2.5] bg-white border border-[#f0f2f5] shadow rounded-xl flex flex-col justify-between min-h-[340px]">
           <CardHeader className="pb-2">
-            <CardTitle className="text-base font-bold text-[#292d32]">Penang Overview Map</CardTitle>
+            <CardTitle className="text-base font-bold text-[#292d32]  mt-2 ml-3">Map Overview</CardTitle>
           </CardHeader>
           <CardContent className="flex-1 flex flex-col">
             <div className="relative flex-1 rounded-lg overflow-hidden mb-2">
@@ -234,7 +229,7 @@ const fetchWeather = async () => {
               ></iframe>
             </div>
             {/* Legend */}
-            <div className="flex items-center justify-center gap-7 mt-2 text-xs">
+            <div className="flex items-center justify-center gap-7 mt-1 text-xs">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-[#16a34a] rounded-full"></div>
                 <span className="text-[#bfc8d6]">Normal (0-25%)</span>
@@ -320,12 +315,7 @@ const fetchWeather = async () => {
                 Active Alerts
               </CardTitle>
               <Button 
-                onClick={() => {
-                  // Simulate opening alerts view
-                  const criticalAlerts = alerts.filter(alert => alert.type === "Critical").length
-                  const warningAlerts = alerts.filter(alert => alert.type === "Warning").length
-                  alert(`All Alerts View:\n• ${criticalAlerts} Critical alerts\n• ${warningAlerts} Warning alerts\n• View detailed reports and take action`)
-                }}
+               
                 variant="ghost" 
                 className="text-[#1b59f8] text-xs p-4 h-auto font-semibold"
               >
@@ -374,23 +364,39 @@ const fetchWeather = async () => {
                 onClick={() => setActiveFilter("All Manholes")}
                 className={`rounded-full px-4 py-1 text-xs font-semibold ${activeFilter === "All Manholes" ? "bg-[#292d32] text-white" : "bg-[#f7f9fb] text-[#292d32] border border-[#e7e7e7]"}`}
               >
-                All Manholes
+                All E-Holes
+              </Button>
+             <Button
+                variant={activeFilter === "Critical" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setActiveFilter("Normal")}
+                className={`rounded-full px-4 py-1 text-xs font-semibold ${activeFilter === "Normal" ? "bg-[#292d32] text-white" : "bg-[#f7f9fb] text-[#292d32] border border-[#e7e7e7]"}`}
+              >
+                Normal
               </Button>
               <Button
-                variant={activeFilter === "Critical Only" ? "default" : "outline"}
+                variant={activeFilter === "Critical" ? "default" : "outline"}
                 size="sm"
-                onClick={() => setActiveFilter("Critical Only")}
-                className={`rounded-full px-4 py-1 text-xs font-semibold ${activeFilter === "Critical Only" ? "bg-[#292d32] text-white" : "bg-[#f7f9fb] text-[#292d32] border border-[#e7e7e7]"}`}
+                onClick={() => setActiveFilter("Critical")}
+                className={`rounded-full px-4 py-1 text-xs font-semibold ${activeFilter === "Critical" ? "bg-[#292d32] text-white" : "bg-[#f7f9fb] text-[#292d32] border border-[#e7e7e7]"}`}
               >
-                Critical Only
+                Critical
               </Button>
               <Button
-                variant={activeFilter === "Maintenance Due" ? "default" : "outline"}
+                variant={activeFilter === "Warning" ? "default" : "outline"}
                 size="sm"
-                onClick={() => setActiveFilter("Maintenance Due")}
-                className={`rounded-full px-4 py-1 text-xs font-semibold ${activeFilter === "Maintenance Due" ? "bg-[#292d32] text-white" : "bg-[#f7f9fb] text-[#292d32] border border-[#e7e7e7]"}`}
+                onClick={() => setActiveFilter("Warning")}
+                className={`rounded-full px-4 py-1 text-xs font-semibold ${activeFilter === "Warning" ? "bg-[#292d32] text-white" : "bg-[#f7f9fb] text-[#292d32] border border-[#e7e7e7]"}`}
               >
-                Maintenance Due
+                Warning
+              </Button>
+                <Button
+                variant={activeFilter === "Maintenance" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setActiveFilter("Maintenance")}
+                className={`rounded-full px-4 py-1 text-xs font-semibold ${activeFilter === "Maintenance" ? "bg-[#292d32] text-white" : "bg-[#f7f9fb] text-[#292d32] border border-[#e7e7e7]"}`}
+              >
+                Maintenance
               </Button>
             </div>
             <div className="flex items-center gap-2">
@@ -400,9 +406,8 @@ const fetchWeather = async () => {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="text-xs">
-                  <SelectItem value="newest" className="text-xs">Newest</SelectItem>
                   <SelectItem value="oldest" className="text-xs">Oldest</SelectItem>
-                  <SelectItem value="status" className="text-xs">Status</SelectItem>
+                  <SelectItem value="newest" className="text-xs">Newest</SelectItem>
                 </SelectContent>
               </Select>
             </div>
