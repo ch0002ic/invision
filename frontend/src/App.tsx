@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Home from "./home";
 import Dashboard1 from "./dashboard1";
 import Dashboard2 from "./dashboard2";
 import Dashboard3 from "./dashboard3";
@@ -25,7 +24,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* Redirect root to dashboard1 */}
+        <Route path="/" element={<Navigate to="/dashboard1" replace />} />
         <Route path="/dashboard1" element={<Dashboard1 />} />
         <Route path="/dashboard2" element={<Dashboard2 />} />
         <Route path="/dashboard3" element={<Dashboard3 />} />

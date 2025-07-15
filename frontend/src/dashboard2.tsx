@@ -60,10 +60,14 @@ export default function Dashboard2() {
     current: number
     color?: string
   }) => {
-    const percentage = ((current - min) / (max - min)) * 100
+    const percentage = Math.min(Math.max(((current - min) / (max - min)) * 100, 0), 100)
     
-    // Calculate angle for semicircle (180 degrees total)
-    const angle = (percentage / 100) * 180 - 90 // -90 to 90 degrees
+    // Calculate angle for semicircle gauge - ensuring perfect alignment
+    const needleAngle = 180 - (percentage / 100) * 180 // 180° to 0° (left to right)
+    
+    // Calculate stroke dash for progress arc to match needle position exactly
+    const arcLength = Math.PI * 40 // Half circle circumference (π * radius)
+    const progressLength = (percentage / 100) * arcLength
     
     return (
       <Card className="p-4 bg-white border border-[#e5e7eb] shadow-sm">
@@ -81,24 +85,25 @@ export default function Dashboard2() {
                 fill="none"
                 strokeLinecap="round"
               />
-              {/* Progress arc */}
+              {/* Progress arc - perfectly synchronized with needle */}
               <path
                 d="M 10 50 A 40 40 0 0 1 110 50"
                 stroke={color}
                 strokeWidth="8"
                 fill="none"
                 strokeLinecap="round"
-                strokeDasharray={`${percentage * 1.57} 157`} // 157 ≈ half circle circumference
+                strokeDasharray={arcLength}
+                strokeDashoffset={arcLength - progressLength}
                 className="transition-all duration-500"
               />
               {/* Center dot */}
               <circle cx="60" cy="50" r="3" fill="#292d32" />
-              {/* Needle */}
+              {/* Needle - perfectly aligned with progress arc */}
               <line
                 x1="60"
                 y1="50"
-                x2={60 + 35 * Math.cos((angle * Math.PI) / 180)}
-                y2={50 + 35 * Math.sin((angle * Math.PI) / 180)}
+                x2={60 + 30 * Math.cos((needleAngle * Math.PI) / 180)}
+                y2={50 - 30 * Math.sin((needleAngle * Math.PI) / 180)}
                 stroke="#292d32"
                 strokeWidth="2"
                 strokeLinecap="round"

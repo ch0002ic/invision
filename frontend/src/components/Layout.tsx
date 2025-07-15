@@ -57,8 +57,8 @@ export default function Layout({ children }: LayoutProps) {
   }
 
   const handleLogout = () => {
-    // Add logout logic here
-    navigate("/")
+    // Navigate to dashboard1 (which is now the home page)
+    navigate("/dashboard1")
   }
 
   return (

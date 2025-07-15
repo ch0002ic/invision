@@ -1,14 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "./components/ui/button"
 import { Card, CardContent } from "./components/ui/card"
-import { Badge } from "./components/ui/badge"
 import { Slider } from "./components/ui/slider"
 import { Switch } from "./components/ui/switch"
 import {
   Battery,
-  MapPin,
   AlertTriangle,
   Scan,
   Camera,
@@ -23,7 +21,6 @@ import ImageCapture from "./assets/Image Capture.png"
 
 export default function Dashboard3() {
   const navigate = useNavigate()
-  const [lastUpdated, setLastUpdated] = useState(new Date())
   const [waterJetInlet, setWaterJetInlet] = useState(true)
   const [waterJetOutlet, setWaterJetOutlet] = useState(true)
   const [blower, setBlower] = useState(true)
@@ -48,27 +45,6 @@ export default function Dashboard3() {
 
   const handleBackToMonitoring = () => {
     navigate("/dashboard2")
-  }
-
-  // Update last updated time every 30 seconds to simulate real-time updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLastUpdated(new Date())
-    }, 30000) // Update every 30 seconds
-
-    return () => clearInterval(interval)
-  }, [])
-
-  // Format the date for display
-  const formatLastUpdated = (date: Date) => {
-    return date.toLocaleString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false
-    }).replace(',', '')
   }
 
   return (
@@ -109,16 +85,13 @@ export default function Dashboard3() {
 
                   <div>
                     <div className="text-sm text-[#9798a1] mb-1">Status</div>
-                    <Badge className="bg-[#dcfce7] text-[#16a34a] hover:bg-[#dcfce7] font-semibold">
+                    <div className="bg-[#dcfce7] text-[#16a34a] font-semibold text-sm px-4 py-1 rounded-full inline-block">
                       Active
-                    </Badge>
+                    </div>
                   </div>
 
                   <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <MapPin className="w-4 h-4 text-[#9798a1]" />
-                      <span className="text-sm text-[#9798a1]">Location</span>
-                    </div>
+                    <div className="text-sm text-[#9798a1] mb-1">Location</div>
                     <div className="text-sm font-bold text-black leading-tight">
                       Faculty of Engineering<br />Universiti Malaya
                     </div>
@@ -128,19 +101,13 @@ export default function Dashboard3() {
             </div>
           </div>
 
-          <div className="flex flex-col items-end gap-4">
-            <div className="text-right">
-              <p className="text-sm text-[#6b7280]">Last Updated</p>
-              <p className="text-lg font-semibold">{formatLastUpdated(lastUpdated)}</p>
-            </div>
-            <Button
-              onClick={handleReport}
-              className="bg-[#dc2626] hover:bg-[#b91c1c] text-white font-bold px-4 py-2 rounded-lg text-sm shadow-md flex items-center"
-            >
-              <AlertTriangle className="w-4 h-4 mr-2" />
-              Report
-            </Button>
-          </div>
+          <Button
+            onClick={handleReport}
+            className="bg-[#dc2626] hover:bg-[#b91c1c] text-white font-bold px-4 py-2 rounded-lg text-sm shadow-md flex items-center"
+          >
+            <AlertTriangle className="w-4 h-4 mr-2" />
+            Report
+          </Button>
         </div>
 
         {/* Controls */}
