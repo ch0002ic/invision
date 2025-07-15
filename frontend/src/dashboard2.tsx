@@ -206,8 +206,8 @@ export default function Dashboard2() {
           {/* Left Column - Gauges */}
           <div className="col-span-2 grid grid-cols-2 gap-6">
             <CircularGauge title="Methane Value" value="215.6" unit="ppm" min={0} max={250} current={215.6} color="#3b82f6" />
-            <CircularGauge title="Pitch Angle" value="0.4" min={0} max={1.0} current={0.4} color="#10b981" />
-            <CircularGauge title="Roll Angle" value="0.4" min={0} max={1.0} current={0.4} color="#f59e0b" />
+            <CircularGauge title="Pitch Angle" value="0" min={0} max={1.0} current={0} color="#10b981" />
+            <CircularGauge title="Roll Angle" value="0" min={0} max={1.0} current={0} color="#f59e0b" />
             <CircularGauge title="Water Level" value="780" unit="mm" min={0} max={1000} current={780} color="#8b5cf6" />
           </div>
           
