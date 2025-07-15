@@ -432,8 +432,12 @@ const fetchWeather = async () => {
                 {currentData.map((item) => (
                   <TableRow 
                     key={item.id} 
-                    className="border-[#f0f2f5] hover:bg-[#f9fbff] cursor-pointer transition-colors"
-                    onClick={() => navigate("/dashboard2")}
+                    className={`border-[#f0f2f5] transition-colors ${
+                      item.id === "237001" 
+                        ? "hover:bg-[#f9fbff] cursor-pointer" 
+                        : "cursor-default"
+                    }`}
+                    onClick={item.id === "237001" ? () => navigate("/dashboard2") : undefined}
                   >
                     <TableCell className="w-1/6 text-center font-bold text-[#292d32] text-xs py-1.5">{item.id}</TableCell>
                     <TableCell className="w-1/6 text-center text-[#292d32] text-xs py-1.5">{item.location}</TableCell>

@@ -7,7 +7,6 @@ import {
   FileText,
   HelpCircle,
   Settings,
-  LogOut,
   ChevronDown
 } from "lucide-react"
 import { Button } from "./ui/button"
@@ -54,11 +53,6 @@ export default function Layout({ children }: LayoutProps) {
 
   const handleNavigation = (path: string) => {
     navigate(path)
-  }
-
-  const handleLogout = () => {
-    // Navigate to dashboard1 (which is now the home page)
-    navigate("/dashboard1")
   }
 
   return (
@@ -133,16 +127,6 @@ export default function Layout({ children }: LayoutProps) {
             </div>
           </div>
         </nav>
-        <div className="mt-auto p-4">
-          <Button 
-            variant="ghost" 
-            onClick={handleLogout}
-            className="w-full justify-start gap-3 text-[#df0404] hover:bg-[#fef2f2] rounded-lg font-semibold !text-base flex items-center"
-          >
-            <LogOut className="w-4 h-4 flex-shrink-0" />
-            <span className="flex-1 text-left">Logout</span>
-          </Button>
-        </div>
       </aside>
 
       {/* Main Content Floating Card Group */}

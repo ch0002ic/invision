@@ -3,7 +3,6 @@
 import { Battery, Edit, Settings } from "lucide-react"
 import { Button } from "./components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card"
-import { Badge } from "./components/ui/badge"
 import Layout from "./components/Layout"
 import { useNavigate } from "react-router-dom"
 import EholeImage from "./assets/ehole.png"
@@ -143,12 +142,6 @@ export default function Dashboard2() {
                   <span className="text-sm text-[#9798a1]">Battery</span>
                 </div>
                 <div className="text-lg font-bold text-black">11.24V</div>
-              </div>
-              <div>
-                <div className="text-sm text-[#9798a1] mb-1">Status</div>
-                <div className="bg-[#dcfce7] text-[#16a34a] font-semibold text-sm px-4 py-1 rounded-full inline-block">
-                  Active
-                </div>
               </div>
             </div>
           </div>
