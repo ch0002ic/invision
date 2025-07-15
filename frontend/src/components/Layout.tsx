@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import {
   Bell,
@@ -19,9 +19,31 @@ interface LayoutProps {
   lastUpdated?: string
 }
 
-export default function Layout({ children, lastUpdated = "2025-01-15 14:32" }: LayoutProps) {
+export default function Layout({ children }: LayoutProps) {
   const navigate = useNavigate()
   const location = useLocation()
+  const [lastUpdated, setLastUpdated] = useState(new Date())
+
+  // Update last updated time every 30 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLastUpdated(new Date())
+    }, 30000) // Update every 30 seconds
+
+    return () => clearInterval(interval)
+  }, [])
+
+  // Format the date for display
+  const formatLastUpdated = (date: Date) => {
+    return date.toLocaleString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).replace(',', '')
+  }
 
   const isActive = (path: string) => {
     if (path === "/" && location.pathname === "/") return true
@@ -125,7 +147,7 @@ export default function Layout({ children, lastUpdated = "2025-01-15 14:32" }: L
             {/* Header */}
             <header className="flex items-center justify-between mb-6 pt-0 pb-2 min-h-[44px]">
               <p className="text-xs text-[#626569] font-medium pt-4">
-                Last Updated: {lastUpdated}
+                Last Updated: {formatLastUpdated(lastUpdated)}
               </p>
               <div className="flex items-center gap-4 mt-2">
                 <Button variant="ghost" size="icon" className="relative p-0 h-10 w-10 flex items-center justify-center">
